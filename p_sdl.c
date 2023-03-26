@@ -157,6 +157,7 @@ void P_Quit()
 	if (texture != NULL) SDL_DestroyTexture(texture);
 	if (renderer != NULL) SDL_DestroyRenderer(renderer);
 	if (window != NULL) SDL_DestroyWindow(window);
+	if (pixels) free(pixels);
 	SDL_SetRelativeMouseMode(SDL_FALSE);
 	SDL_Quit();
 }

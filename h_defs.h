@@ -92,7 +92,7 @@ typedef unsigned int u32;
 #define SCR_BPP 32
 
 /*
- * h_rend.c
+ * r_main.c
  */
 
 void R_Render();
@@ -100,14 +100,14 @@ void R_Init();
 void R_Quit();
 
 /*
- * h_util.c
+ * u_main.c
  */
 
 void U_Error(const char *s);
 void U_Warning(const char *s);
 
 /*
- * h_mem.c
+ * u_mem.c
  */
 
 void *U_Memset32(void *d, u32 c, size_t n);
@@ -120,7 +120,7 @@ extern u8 scratch[256];
 void R_DrawTextF(int x, int y, u32 c, char *fmt, ...);
 
 /*
- * h_world.c
+ * w_main.c
  */
 
 #define MAX_SECTOR 32
@@ -155,7 +155,7 @@ extern wall_t walls[MAX_WALL];
 void W_Init();
 
 /*
- * platform
+ * p_sdl.c
  */
 
 int P_Init();

@@ -64,6 +64,9 @@ int main(int argc, char **argv)
 	if (!P_Init())
 		U_Error("failed to init platform");
 
+	/* init world */
+	W_Init();
+
 	/* init renderer */
 	R_Init();
 
