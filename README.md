@@ -4,6 +4,16 @@ a software-rendered 3d portal engine in pure ANSI C*
 
 \* small3dlib.h does not fully conform to the ANSI C standard
 
+## code guide
+
+| filenames  | function names | meaning  |
+|------------|----------------|----------|
+| h_*.c      | H_*            | harvest  |
+| p_*.c      | P_*            | platform |
+| r_*.c      | R_*            | renderer |
+| u_*.c      | U_*            | utility  |
+| w_*.c      | W_*            | world    |
+
 ## license
 
 ANTI-CAPITALIST SOFTWARE LICENSE (v 1.4)
