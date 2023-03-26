@@ -93,8 +93,12 @@ int main(int argc, char **argv)
 		P_EndFrame();
 	}
 
+	/* shutdown renderer */
 	R_Quit();
+
+	/* shutdown platform */
 	P_Quit();
 
+	/* exit gracefully */
 	return 0;
 }
