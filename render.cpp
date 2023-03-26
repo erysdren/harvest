@@ -138,6 +138,28 @@ void Renderer_Quit()
 }
 
 //
+// Renderer_Draw
+//
+
+void Renderer_Draw()
+{
+	// variables
+	S3L_Model3D model;
+	S3L_Scene scene;
+
+	// init
+	S3L_model3DInit((const S3L_Unit *)&vertices[0], vertices.size() * 3, (const S3L_Index *)&triangles[0], triangles.size(), &model);
+	S3L_sceneInit(&model, 1, &scene);
+
+	scene.camera.transform.translation.z = -16 * S3L_F;
+	scene.camera.transform.translation.y = S3L_F / 16;
+
+	// render frame
+	S3L_newFrame();
+	S3L_drawScene(scene);
+}
+
+//
 // Renderer_DrawScene
 //
 

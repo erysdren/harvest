@@ -70,6 +70,7 @@ using namespace std;
 // utilities
 //
 
+// functions
 void Error(const char *s);
 void Warning(const char *s);
 void *Memset8(void *d, uint8_t c, size_t n);
@@ -80,16 +81,21 @@ void *Memset32(void *d, uint32_t c, size_t n);
 // renderer
 //
 
+// globals
 extern char scratch[256];
+
+// functions
 void Renderer_DrawText(int x, int y, uint32_t c, const char *fmt, ...);
 void Renderer_DrawScene();
 bool Renderer_Init();
 void Renderer_Quit();
+void Renderer_Draw();
 
 //
 // platform
 //
 
+// functions
 bool Platform_Init();
 bool Platform_InitScreen(int w, int h, const char *title);
 void Platform_Quit();
@@ -105,17 +111,51 @@ void Platform_GetMouse(int *x, int *y, int *dx, int *dy);
 // world
 //
 
-class Wall
+// triangle class
+class Triangle
 {
+	public:
+		uint32_t x, y, z;
 
+		Triangle(uint32_t x, uint32_t y, uint32_t z);
 };
 
+// vertex class
+class Vertex
+{
+	public:
+		int32_t x, y, z;
+
+		Vertex(int32_t x, int32_t y, int32_t z);
+};
+
+// wall class
+class Wall
+{
+	public:
+
+		// vertex indices in the level mesh
+		vector<uint16_t> indices;
+
+		// sectors this wall is touching
+		// if both are valid indices, it's a portal
+		int16_t sectors[2];
+};
+
+// sector class
 class Sector
 {
 	public:
-		int num_walls;
-		vector<Wall> walls;
 
-	private:
-
+		// wall indices in the global wall buffer
+		vector<uint16_t> walls;
 };
+
+// globals
+extern vector<Vertex> vertices;
+extern vector<Triangle> triangles;
+extern vector<Wall> walls;
+extern vector<Sector> sectors;
+
+// functions
+bool World_Init();

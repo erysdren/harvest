@@ -62,6 +62,7 @@ int main(int argc, char **argv)
 {
 	// init
 	if (!Platform_Init()) Error("failed to init platform");
+	if (!World_Init()) Error("failed to init world");
 	if (!Renderer_Init()) Error("failed to init renderer");
 	if (!Platform_InitScreen(SCR_W, SCR_H, SCR_TITLE)) Error("failed to init platform screen");
 
@@ -75,7 +76,7 @@ int main(int argc, char **argv)
 		Platform_ClearScreen(0);
 
 		// render 3d scene
-		Renderer_DrawScene();
+		Renderer_Draw();
 
 		// draw some text
 		Renderer_DrawText(4, 4, ARGB(255, 255, 255, 255), "hello world!");

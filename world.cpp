@@ -50,3 +50,65 @@
 // harvest engine
 #include "harvest.hpp"
 
+// fractions per unit - S3L
+#define FRAC 512
+
+//
+// globals
+//
+
+vector<Vertex> vertices;
+vector<Triangle> triangles;
+vector<Wall> walls;
+vector<Sector> sectors;
+
+//
+// Triangle class
+//
+
+Triangle::Triangle(uint32_t x, uint32_t y, uint32_t z)
+{
+	this->x = x;
+	this->y = y;
+	this->z = z;
+}
+
+//
+// Vertex class
+//
+
+Vertex::Vertex(int32_t x, int32_t y, int32_t z)
+{
+	this->x = x * FRAC;
+	this->y = y * FRAC;
+	this->z = z * FRAC;
+}
+
+//
+// World_Init
+//
+
+bool World_Init()
+{
+	// box vertices
+	vertices.push_back(Vertex(-8, 8, 8));
+	vertices.push_back(Vertex(-8, -8, 8));
+	vertices.push_back(Vertex(-8, 8, -8));
+	vertices.push_back(Vertex(-8, -8, -8));
+	vertices.push_back(Vertex(8, -8, 8));
+	vertices.push_back(Vertex(-8, 8, 8));
+	vertices.push_back(Vertex(8, -8, -8));
+	vertices.push_back(Vertex(8, 8, -8));
+
+	// box triangles
+	triangles.push_back(Triangle(2, 1, 0));
+	triangles.push_back(Triangle(1, 2, 3));
+	triangles.push_back(Triangle(6, 5, 4));
+	triangles.push_back(Triangle(5, 6, 7));
+	triangles.push_back(Triangle(7, 0, 5));
+	triangles.push_back(Triangle(0, 7, 2));
+	triangles.push_back(Triangle(3, 4, 1));
+	triangles.push_back(Triangle(3, 6, 4));
+
+	return true;
+}
