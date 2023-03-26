@@ -116,7 +116,7 @@ S3L_Scene scene;
 // Renderer_Init
 //
 
-void Renderer_Init()
+bool Renderer_Init()
 {
 	S3L_model3DInit(box_vertices, 24, box_indices, 8, &box_model);
 	S3L_sceneInit(&box_model, 1, &scene);
@@ -124,6 +124,8 @@ void Renderer_Init()
 	scene.camera.transform.translation.y = S3L_F / 16;
 
 	stencil = (uint8_t *)malloc(SCR_W * SCR_H * sizeof(uint8_t));
+
+	return true;
 }
 
 //

@@ -54,48 +54,40 @@
 // harvest engine
 #include "harvest.hpp"
 
-/*
- * main
- */
+//
+// main
+//
 
 int main(int argc, char **argv)
 {
-	/* init platform */
-	if (!Platform_Init())
-		Error("failed to init platform");
+	// init
+	if (!Platform_Init()) Error("failed to init platform");
+	if (!Renderer_Init()) Error("failed to init renderer");
+	if (!Platform_InitScreen(SCR_W, SCR_H, SCR_TITLE)) Error("failed to init platform screen");
 
-	/* init renderer */
-	Renderer_Init();
-
-	/* open platform window */
-	if (!Platform_InitScreen(SCR_W, SCR_H, SCR_TITLE))
-		Error("failed to open window");
-
-	/* main loop */
+	// main loop
 	while (!Platform_ShouldQuit())
 	{
-		/* poll events */
+		// poll events
 		Platform_StartFrame();
 
-		/* clear back buffer */
+		// clear screen
 		Platform_ClearScreen(0);
 
-		/* render 3d scene */
+		// render 3d scene
 		Renderer_DrawScene();
 
-		/* draw text */
+		// draw some text
 		Renderer_DrawText(4, 4, ARGB(255, 255, 255, 255), "hello world!");
 
-		/* put frame on screen */
+		// put frame to screen
 		Platform_EndFrame();
 	}
 
-	/* shutdown renderer */
+	// quit
 	Renderer_Quit();
-
-	/* shutdown platform */
 	Platform_Quit();
 
-	/* exit gracefully */
+	// exit gracefully
 	return 0;
 }

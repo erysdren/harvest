@@ -83,7 +83,7 @@ void *Memset32(void *d, uint32_t c, size_t n);
 extern char scratch[256];
 void Renderer_DrawText(int x, int y, uint32_t c, const char *fmt, ...);
 void Renderer_DrawScene();
-void Renderer_Init();
+bool Renderer_Init();
 void Renderer_Quit();
 
 //
