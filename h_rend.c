@@ -183,7 +183,18 @@ void R_RenderSector(int sector_id)
 	/* step through the walls */
 	for (w = 0; w < 6; w++)
 	{
+		/* local wall */
 		wall = sector.walls[w];
+
+		/* error! */
+		if (wall.sectors[0] != sector_id && wall.sectors[1] != sector_id)
+			return;
+
+		/* it's a portal */
+		if (wall.sectors[0] != sector_id && wall.sectors[0] > -1)
+			R_RenderSector(wall.sectors[0]);
+		else if (wall.sectors[1] != sector_id && wall.sectors[1] > -1)
+			R_RenderSector(wall.sectors[1]);
 	}
 }
 
