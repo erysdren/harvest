@@ -55,8 +55,12 @@ SOFTWARE.
 #include "h_defs.h"
 
 /*
- * globals
+ * U_Memset32
  */
 
-/* sectors buffer */
-sector_t sectors[MAX_SECTOR];
+void *U_Memset32(void *d, u32 c, size_t n)
+{
+	u32 *p = d;
+	while (n--) p[n] = c;
+	return d;
+}

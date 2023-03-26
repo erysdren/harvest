@@ -95,22 +95,22 @@ typedef unsigned int u32;
  * h_rend.c
  */
 
-void renderer_renderscene();
-void renderer_init();
-void renderer_quit();
+void R_Render();
+void R_Init();
+void R_Quit();
 
 /*
  * h_util.c
  */
 
-void error(const char *s);
-void warn(const char *s);
+void U_Error(const char *s);
+void U_Warning(const char *s);
 
 /*
  * h_mem.c
  */
 
-void *memset32(void *d, u32 c, size_t n);
+void *U_Memset32(void *d, u32 c, size_t n);
 
 /*
  * r_text.c
@@ -124,36 +124,50 @@ void R_DrawTextF(int x, int y, u32 c, char *fmt, ...);
  */
 
 #define MAX_SECTOR 32
+#define MAX_PORTAL 64
+#define MAX_WALL 128
+
+/* portal struct */
+typedef struct portal_t
+{
+	short sectors[2];
+} portal_t;
 
 /* wall struct */
 typedef struct wall_t
 {
 	short indices[4];
-	short sectors[2];
+	short portal;
 } wall_t;
 
 /* only cubes for now */
 typedef struct sector_t
 {
-	wall_t walls[6];
+	short walls[6];
 } sector_t;
 
+/* global stack buffers */
 extern sector_t sectors[MAX_SECTOR];
+extern u8 sectors_rendered[MAX_SECTOR];
+extern portal_t portals[MAX_PORTAL];
+extern wall_t walls[MAX_WALL];
+
+void W_Init();
 
 /*
  * platform
  */
 
-int platform_init();
-int platform_open(int w, int h, const char *title);
-void platform_quit();
-int platform_should_close();
-void platform_frame_start();
-void platform_frame_end();
-void platform_clear(u32 c);
-int platform_key(int sc);
-void platform_pixel(u32 x, u32 y, u32 c);
-void platform_mouse(int *x, int *y, int *dx, int *dy);
+int P_Init();
+int P_Open(int w, int h, const char *title);
+void P_Quit();
+int P_ShouldClose();
+void P_StartFrame();
+void P_EndFrame();
+void P_ClearScreen(u32 c);
+int P_KeyDown(int sc);
+void P_Pixel(u32 x, u32 y, u32 c);
+void P_GetMouse(int *x, int *y, int *dx, int *dy);
 
 #ifdef __cplusplus
 }

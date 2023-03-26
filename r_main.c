@@ -114,39 +114,39 @@ S3L_Model3D box_model;
 S3L_Scene scene;
 
 /*
- * renderer_init
+ * R_Init
  */
 
-void renderer_init()
+void R_Init()
 {
 	S3L_model3DInit(box_vertices, 24, box_indices, 8, &box_model);
 	S3L_sceneInit(&box_model, 1, &scene);
 	scene.camera.transform.translation.z = -16 * S3L_F;
 	scene.camera.transform.translation.y = S3L_F / 16;
 
-	stencil = malloc(SCR_W * SCR_H);
+	stencil = malloc(SCR_W * SCR_H * sizeof(u8));
 }
 
 /*
- * renderer_quit
+ * R_Quit
  */
 
-void renderer_quit()
+void R_Quit()
 {
 	if (stencil) free(stencil);
 }
 
 /*
- * renderer_renderscene
+ * R_Render
  */
 
-void renderer_renderscene()
+void R_Render()
 {
 	/* variables */
 	int dx, dy;
 
 	/* read mouse */
-	platform_mouse(NULL, NULL, &dx, &dy);
+	P_GetMouse(NULL, NULL, &dx, &dy);
 
 	/* update camera */
 	scene.camera.transform.rotation.x -= dy;
@@ -175,7 +175,11 @@ void R_RenderSector(int sector_id)
 	/* variables */
 	sector_t sector;
 	wall_t wall;
+	portal_t portal;
 	int w;
+
+	/* check if we've rendered this */
+	if (sectors_rendered[sector_id]) return;
 
 	/* local sector */
 	sector = sectors[sector_id];
@@ -184,18 +188,29 @@ void R_RenderSector(int sector_id)
 	for (w = 0; w < 6; w++)
 	{
 		/* local wall */
-		wall = sector.walls[w];
-
-		/* error! */
-		if (wall.sectors[0] != sector_id && wall.sectors[1] != sector_id)
-			return;
+		wall = walls[sector.walls[w]];
 
 		/* it's a portal */
-		if (wall.sectors[0] != sector_id && wall.sectors[0] > -1)
-			R_RenderSector(wall.sectors[0]);
-		else if (wall.sectors[1] != sector_id && wall.sectors[1] > -1)
-			R_RenderSector(wall.sectors[1]);
+		if (wall.portal > -1)
+		{
+			portal = portals[wall.portal];
+
+			/* render sector through the portal */
+			if (portal.sectors[0] == sector_id)
+				R_RenderSector(portal.sectors[1]);
+			else if (portal.sectors[1] == sector_id)
+				R_RenderSector(portal.sectors[0]);
+			else
+				U_Error("portal with invalid wall id");
+
+			continue;
+		}
+
+		/* it's a wall */
 	}
+
+	/* set this sector rendered */
+	sectors_rendered[sector_id] = 1;
 }
 
 /*
@@ -204,7 +219,7 @@ void R_RenderSector(int sector_id)
 
 void _pixel(S3L_PixelInfo *p)
 {
-	platform_pixel(p->x, p->y, ARGB(
+	P_Pixel(p->x, p->y, ARGB(
 		(p->modelIndex + 1) * 16 + (p->triangleIndex + 1) * 16,
 		(p->modelIndex + 1) * 16 + (p->triangleIndex + 1) * 16,
 		(p->modelIndex + 1) * 16 + (p->triangleIndex + 1) * 16,

@@ -55,12 +55,20 @@ SOFTWARE.
 #include "h_defs.h"
 
 /*
- * memset32
+ * U_Error
  */
 
-void *memset32(void *d, u32 c, size_t n)
+void U_Error(const char *s)
 {
-	u32 *p = d;
-	while (n--) p[n] = c;
-	return d;
+	fprintf(stderr, "error: %s\n", s);
+	exit(1);
+}
+
+/*
+ * U_Warning
+ */
+
+void U_Warning(const char *s)
+{
+	fprintf(stderr, "warning: %s\n", s);
 }

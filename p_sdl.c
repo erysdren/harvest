@@ -88,10 +88,10 @@ struct mouse_t
 u8 keys[256];
 
 /*
- * platform_init
+ * P_init
  */
 
-int platform_init()
+int P_Init()
 {
 	should_quit = SDL_FALSE;
 
@@ -104,10 +104,10 @@ int platform_init()
 }
 
 /*
- * platform_open
+ * P_Open
  */
 
-int platform_open(int w, int h, const char *title)
+int P_Open(int w, int h, const char *title)
 {
 	window = SDL_CreateWindow(
 		title,
@@ -149,10 +149,10 @@ int platform_open(int w, int h, const char *title)
 }
 
 /*
- * platform_quit
+ * P_Quit
  */
 
-void platform_quit()
+void P_Quit()
 {
 	if (texture != NULL) SDL_DestroyTexture(texture);
 	if (renderer != NULL) SDL_DestroyRenderer(renderer);
@@ -162,19 +162,19 @@ void platform_quit()
 }
 
 /*
- * platform_should_close
+ * P_ShouldClose
  */
 
-int platform_should_close()
+int P_ShouldClose()
 {
 	return should_quit;
 }
 
 /*
- * platform_frame_start
+ * P_StartFrame
  */
 
-void platform_frame_start()
+void P_StartFrame()
 {
 	/* variables */
 	SDL_Event event;
@@ -253,10 +253,10 @@ void calc_screen_pos(int x, int y, SDL_Rect *rect)
 }
 
 /*
- * platform_frame_end
+ * P_EndFrame
  */
 
-void platform_frame_end()
+void P_EndFrame()
 {
 	int x, y;
 	SDL_Rect rect;
@@ -272,38 +272,38 @@ void platform_frame_end()
 }
 
 /*
- * platform_clear
+ * P_ClearScreen
  */
 
-void platform_clear(u32 c)
+void P_ClearScreen(u32 c)
 {
-	memset32(pixels, c, width * height);
+	U_Memset32(pixels, c, width * height);
 }
 
 /*
- * platform_key
+ * P_KeyDown
  */
 
-int platform_key(int sc)
+int P_KeyDown(int sc)
 {
 	return keys[sc];
 }
 
 /*
- * platform_pixel
+ * P_Pixel
  */
 
-void platform_pixel(u32 x, u32 y, u32 c)
+void P_Pixel(u32 x, u32 y, u32 c)
 {
 	if (pixels)
 		((u32 *)pixels)[(y * width) + x] = c;
 }
 
 /*
- * platform_mouse
+ * P_GetMouse
  */
 
-void platform_mouse(int *x, int *y, int *dx, int *dy)
+void P_GetMouse(int *x, int *y, int *dx, int *dy)
 {
 	/* apply ptrs */
 	if (x) *x = mouse.x;

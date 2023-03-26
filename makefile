@@ -43,11 +43,21 @@
 ##
 ##
 
-SOURCES = h_sdl.c h_main.c h_mem.c h_util.c h_rend.c r_text.c h_world.c
+SOURCES += h_main.c
+SOURCES += p_sdl.c
+SOURCES += r_main.c r_text.c
+SOURCES += u_main.c u_mem.c
+SOURCES += w_main.c
 
+## defs
 DEFS = -DPLAT_SDL=1
 
+## sdl2
 SDL2 = `sdl2-config --cflags --libs`
+
+##
+## targets
+##
 
 all: clean harvest
 

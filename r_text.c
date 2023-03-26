@@ -82,7 +82,7 @@ void R_DrawChar(int x, int y, u32 c, char *bitmap)
 			if (x + xx > SCR_W - 1 || y + yy > SCR_H - 1) return;
 
 			if (bitmap[yy] & 1 << xx)
-				platform_pixel(x + xx, y + yy, c);
+				P_Pixel(x + xx, y + yy, c);
 		}
 	}
 }

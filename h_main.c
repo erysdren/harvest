@@ -61,37 +61,37 @@ SOFTWARE.
 int main(int argc, char **argv)
 {
 	/* init platform */
-	if (!platform_init())
-		error("failed to init platform");
+	if (!P_Init())
+		U_Error("failed to init platform");
 
 	/* init renderer */
-	renderer_init();
+	R_Init();
 
 	/* open platform window */
-	if (!platform_open(SCR_W, SCR_H, SCR_TITLE))
-		error("failed to open window");
+	if (!P_Open(SCR_W, SCR_H, SCR_TITLE))
+		U_Error("failed to open window");
 
 	/* main loop */
-	while (!platform_should_close())
+	while (!P_ShouldClose())
 	{
 		/* poll events */
-		platform_frame_start();
+		P_StartFrame();
 
 		/* clear back buffer */
-		platform_clear(0);
+		P_ClearScreen(0);
 
 		/* render 3d scene */
-		renderer_renderscene();
+		R_Render();
 
 		/* draw text */
 		R_DrawTextF(4, 4, ARGB(255, 255, 255, 255), "hello world!");
 
 		/* put frame on screen */
-		platform_frame_end();
+		P_EndFrame();
 	}
 
-	renderer_quit();
-	platform_quit();
+	R_Quit();
+	P_Quit();
 
 	return 0;
 }

@@ -50,25 +50,26 @@ SOFTWARE.
 /* std */
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /* harvest engine */
 #include "h_defs.h"
 
 /*
- * error
+ * globals
  */
 
-void error(const char *s)
-{
-	fprintf(stderr, "error: %s\n", s);
-	exit(1);
-}
+sector_t sectors[MAX_SECTOR];
+u8 sectors_rendered[MAX_SECTOR];
+portal_t portals[MAX_PORTAL];
+wall_t walls[MAX_WALL];
 
 /*
- * warn
+ * W_Init
  */
 
-void warn(const char *s)
+void W_Init()
 {
-	fprintf(stderr, "warning: %s\n", s);
+	/* reset buffer */
+	memset(sectors_rendered, 0, sizeof(sectors_rendered));
 }
