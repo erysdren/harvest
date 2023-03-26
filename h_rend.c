@@ -167,6 +167,27 @@ void renderer_renderscene()
 }
 
 /*
+ * R_RenderSector
+ */
+
+void R_RenderSector(int sector_id)
+{
+	/* variables */
+	sector_t sector;
+	wall_t wall;
+	int w;
+
+	/* local sector */
+	sector = sectors[sector_id];
+
+	/* step through the walls */
+	for (w = 0; w < 6; w++)
+	{
+		wall = sector.walls[w];
+	}
+}
+
+/*
  * _pixel
  */
 

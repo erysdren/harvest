@@ -43,7 +43,7 @@
 ##
 ##
 
-SOURCES = h_sdl.c h_main.c h_mem.c h_util.c h_rend.c r_text.c
+SOURCES = h_sdl.c h_main.c h_mem.c h_util.c h_rend.c r_text.c h_world.c
 
 DEFS = -DPLAT_SDL=1
 
