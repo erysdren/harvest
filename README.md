@@ -1,10 +1,13 @@
 # harvest engine
 
-a software-rendered 3d portal engine in pure ANSI C*
+a software-rendered 3d portal engine in C++
 
 it's in a very early state right now.
 
-\* small3dlib.h does not fully conform to the ANSI C standard
+## thirdparty
+
+* small3dlib (CC0)
+* font8x8 (Public Domain)
 
 ## code guide
 

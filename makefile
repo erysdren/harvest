@@ -43,17 +43,11 @@
 ##
 ##
 
-SOURCES += h_main.c
-SOURCES += p_sdl.c
-SOURCES += r_main.c r_text.c
-SOURCES += u_main.c u_mem.c
-SOURCES += w_main.c
+CXXFLAGS += -O2
 
-## defs
-DEFS = -DPLAT_SDL=1
-
-## sdl2
-SDL2 = `sdl2-config --cflags --libs`
+SOURCES = main.cpp render.cpp utilities.cpp world.cpp
+OUTPUT = -o harvest
+PLATFORM = platform_sdl2.cpp `sdl2-config --cflags --libs`
 
 ##
 ## targets
@@ -62,7 +56,7 @@ SDL2 = `sdl2-config --cflags --libs`
 all: clean harvest
 
 harvest: $(SOURCES)
-	$(CC) -o harvest $(DEFS) $(SOURCES) $(CFLAGS) $(SDL2)
+	$(CXX) $(OUTPUT) $(SOURCES) $(PLATFORM) $(CXXFLAGS)
 
 clean:
 	$(RM) harvest *.exe
