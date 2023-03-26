@@ -110,6 +110,8 @@ void U_Warning(const char *s);
  * u_mem.c
  */
 
+void *U_Memset8(void *d, u8 c, size_t n);
+void *U_Memset16(void *d, u16 c, size_t n);
 void *U_Memset32(void *d, u32 c, size_t n);
 
 /*

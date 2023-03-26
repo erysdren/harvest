@@ -55,6 +55,28 @@ SOFTWARE.
 #include "h_defs.h"
 
 /*
+ * U_Memset8
+ */
+
+void *U_Memset8(void *d, u8 c, size_t n)
+{
+	u8 *p = d;
+	while (n--) p[n] = c;
+	return d;
+}
+
+/*
+ * U_Memset16
+ */
+
+void *U_Memset16(void *d, u16 c, size_t n)
+{
+	u16 *p = d;
+	while (n--) p[n] = c;
+	return d;
+}
+
+/*
  * U_Memset32
  */
 

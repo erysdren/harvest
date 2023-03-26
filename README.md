@@ -2,6 +2,8 @@
 
 a software-rendered 3d portal engine in pure ANSI C*
 
+it's in a very early state right now.
+
 \* small3dlib.h does not fully conform to the ANSI C standard
 
 ## code guide
