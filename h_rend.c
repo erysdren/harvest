@@ -1,7 +1,7 @@
 /*
 ANTI-CAPITALIST SOFTWARE LICENSE (v 1.4)
 
-Copyright © 2022-2023 Erysdren Media
+Copyright © 2022-2023 erysdren (it/they/she)
 
 This is anti-capitalist software, released for free use by individuals
 and organizations that do not operate by capitalist principles.
