@@ -37,14 +37,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#pragma once
-#ifndef __HARVEST_H__
-#define __HARVEST_H__
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /*
  *
  * harvest engine
@@ -52,90 +44,78 @@ extern "C" {
  */
 
 /*
- * types
+ * headers
  */
 
-#if __SIZEOF_POINTER__ == 4
+/* std */
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdarg.h>
 
-typedef unsigned char u8;
-typedef unsigned short u16;
-typedef unsigned long u32;
+/* harvest engine */
+#include "h_defs.h"
 
-#elif __SIZEOF_POINTER__ == 8
-
-typedef unsigned char u8;
-typedef unsigned short u16;
-typedef unsigned int u32;
-
-#else
-
-#error cant determine processor architechture, sorry
-
-#endif
+/* font8x8 */
+#include "thirdparty/font8x8_basic.h"
 
 /*
- * macros
+ * globals
  */
 
-/* rgb */
-#define ARGB(r, g, b, a) (((a) << 24) | ((r) << 16) | ((g) << 8) | (b))
-#define RGBA(r, g, b, a) (((r) << 24) | ((g) << 16) | ((b) << 8) | (a))
-
-/* screen width */
-#define SCR_W 640
-#define SCR_H 480
-
-/* title */
-#define SCR_TITLE "Harvest Engine"
-
-/* bpp */
-#define SCR_BPP 32
+u8 scratch[256];
 
 /*
- * h_rend.c
+ * R_DrawChar
  */
 
-void renderer_renderscene();
-void renderer_init();
-void renderer_quit();
+void R_DrawChar(int x, int y, u32 c, char *bitmap)
+{
+	/* variables */
+	int xx, yy;
 
-/*
- * h_util.c
- */
+	/* plot loop */
+	for (yy = 0; yy < 8; yy++)
+	{
+		for (xx = 0; xx < 8; xx++)
+		{
+			if (x + xx > SCR_W - 1 || y + yy > SCR_H - 1) return;
 
-void error(const char *s);
-void warn(const char *s);
-
-/*
- * h_mem.c
- */
-
-void *memset32(void *d, u32 c, size_t n);
-
-/*
- * r_text.c
- */
-
-extern u8 scratch[256];
-void R_DrawTextF(int x, int y, u32 c, char *fmt, ...);
-
-/*
- * platform
- */
-
-int platform_init();
-int platform_open(int w, int h, const char *title);
-void platform_quit();
-int platform_should_close();
-void platform_frame_start();
-void platform_frame_end();
-void platform_clear(u32 c);
-int platform_key(int sc);
-void platform_pixel(u32 x, u32 y, u32 c);
-void platform_mouse(int *x, int *y, int *dx, int *dy);
-
-#ifdef __cplusplus
+			if (bitmap[yy] & 1 << xx)
+				platform_pixel(x + xx, y + yy, c);
+		}
+	}
 }
-#endif
 
-#endif /* __HARVEST_H__ */
+/*
+ * R_DrawTextF
+ */
+
+void R_DrawTextF(int x, int y, u32 c, char *fmt, ...)
+{
+	/* variables */
+	int i, p;
+	va_list va;
+
+	/* process vargs */
+	va_start(va, fmt);
+	vsnprintf(scratch, sizeof(scratch), fmt, va);
+	va_end(va);
+
+	/* plot loop */
+	for (i = 0; i < strlen(scratch); i++)
+	{
+		/* check for newlines */
+		if (scratch[i] == '\n')
+		{
+			y += 8;
+			x -= (p + 1) * 8;
+			p = 0;
+			continue;
+		}
+
+		p++;
+
+		R_DrawChar(x + (i * 8), y, c, font8x8_basic[scratch[i]]);
+	}
+}

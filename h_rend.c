@@ -67,13 +67,18 @@ SOFTWARE.
 #endif
 
 #define S3L_PIXEL_FUNCTION _pixel
+#define S3L_Z_BUFFER 1
+#define S3L_NEAR_CROSS_STRATEGY 3
 
-/* tinyfish */
-#include "small3dlib.h"
+/* small3dlib */
+#include "thirdparty/small3dlib.h"
 
 /*
  * globals
  */
+
+/* stencil buffer */
+u8 *stencil;
 
 /* test box vertices */
 S3L_Unit box_vertices[] =
@@ -118,6 +123,17 @@ void renderer_init()
 	S3L_sceneInit(&box_model, 1, &scene);
 	scene.camera.transform.translation.z = -16 * S3L_F;
 	scene.camera.transform.translation.y = S3L_F / 16;
+
+	stencil = malloc(SCR_W * SCR_H);
+}
+
+/*
+ * renderer_quit
+ */
+
+void renderer_quit()
+{
+	if (stencil) free(stencil);
 }
 
 /*
@@ -126,6 +142,26 @@ void renderer_init()
 
 void renderer_renderscene()
 {
+	/* variables */
+	int dx, dy;
+
+	/* read mouse */
+	platform_mouse(NULL, NULL, &dx, &dy);
+
+	/* update camera */
+	scene.camera.transform.rotation.x -= dy;
+	scene.camera.transform.rotation.y -= dx;
+
+	/* clamp mouse pitch */
+	scene.camera.transform.rotation.x =
+		S3L_clamp(scene.camera.transform.rotation.x, -128, 128);
+
+	/* clamp mouse yaw */
+	if (scene.camera.transform.rotation.y < -256)
+		scene.camera.transform.rotation.y += 512;
+	if (scene.camera.transform.rotation.y > 256)
+		scene.camera.transform.rotation.y -= 512;
+
 	S3L_newFrame();
 	S3L_drawScene(scene);
 }

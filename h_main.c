@@ -83,11 +83,15 @@ int main(int argc, char **argv)
 		/* render 3d scene */
 		renderer_renderscene();
 
+		/* draw text */
+		R_DrawTextF(4, 4, ARGB(255, 255, 255, 255), "hello world!");
+
 		/* put frame on screen */
 		platform_frame_end();
 	}
 
-	platform_close();
+	renderer_quit();
+	platform_quit();
 
 	return 0;
 }

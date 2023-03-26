@@ -58,6 +58,13 @@ SOFTWARE.
 #include "h_defs.h"
 
 /*
+ * macros
+ */
+
+#define ASPECT1 (float)(SCR_W) / (float)(SCR_H)
+#define ASPECT2 (float)(SCR_H) / (float)(SCR_W)
+
+/*
  * globals
  */
 
@@ -69,6 +76,15 @@ int should_quit;
 int width;
 int height;
 
+struct mouse_t
+{
+	int x;		/* x pos */
+	int y;		/* y pos */
+	int dx;		/* delta x */
+	int dy;		/* delta y */
+	int b;		/* button mask */
+} mouse;
+
 u8 keys[256];
 
 /*
@@ -77,10 +93,12 @@ u8 keys[256];
 
 int platform_init()
 {
-	should_quit = 0;
+	should_quit = SDL_FALSE;
 
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 		return -1;
+
+	SDL_SetRelativeMouseMode(SDL_TRUE);
 
 	return 1;
 }
@@ -131,14 +149,15 @@ int platform_open(int w, int h, const char *title)
 }
 
 /*
- * platform_close
+ * platform_quit
  */
 
-void platform_close()
+void platform_quit()
 {
 	if (texture != NULL) SDL_DestroyTexture(texture);
 	if (renderer != NULL) SDL_DestroyRenderer(renderer);
 	if (window != NULL) SDL_DestroyWindow(window);
+	SDL_SetRelativeMouseMode(SDL_FALSE);
 	SDL_Quit();
 }
 
@@ -157,14 +176,23 @@ int platform_should_close()
 
 void platform_frame_start()
 {
+	/* variables */
 	SDL_Event event;
 
+	/* event poll loop */
 	while (SDL_PollEvent(&event))
 	{
 		switch (event.type)
 		{
 			case SDL_QUIT:
 				should_quit = SDL_TRUE;
+				break;
+
+			case SDL_MOUSEMOTION:
+				mouse.x = event.motion.x;
+				mouse.y = event.motion.y;
+				mouse.dx = event.motion.xrel;
+				mouse.dy = event.motion.yrel;
 				break;
 
 			case SDL_KEYDOWN:
@@ -179,14 +207,67 @@ void platform_frame_start()
 }
 
 /*
+ * calc_screen_size
+ */
+
+void calc_screen_size(int x, int y, SDL_Rect *rect)
+{
+	if (y < x && (y * ASPECT1) < x)
+	{
+		rect->w = y * ASPECT1;
+		rect->h = y;
+	}
+	else if ((x / y) == ASPECT1)
+	{
+		rect->w = x;
+		rect->h = y;
+	}
+	else
+	{
+		rect->w = x;
+		rect->h = x * ASPECT2;
+	}
+}
+
+/*
+ * calc_screen_pos
+ */
+
+void calc_screen_pos(int x, int y, SDL_Rect *rect)
+{
+	if (y < x && (y * ASPECT1) < x)
+	{
+		rect->x = (x / 2) - ((y * ASPECT1) / 2);
+		rect->y = 0;
+	}
+	else if (x / y == ASPECT1)
+	{
+		rect->x = 0;
+		rect->y = 0;
+	}
+	else
+	{
+		rect->x = 0;
+		rect->y = (y / 2) - ((x * ASPECT2) / 2);
+	}
+}
+
+/*
  * platform_frame_end
  */
 
 void platform_frame_end()
 {
+	int x, y;
+	SDL_Rect rect;
+
+	SDL_GetWindowSize(window, &x, &y);
+	calc_screen_pos(x, y, &rect);
+	calc_screen_size(x, y, &rect);
+
 	SDL_UpdateTexture(texture, NULL, pixels, width * sizeof(u32));
 	SDL_RenderClear(renderer);
-	SDL_RenderCopy(renderer, texture, NULL, NULL);
+	SDL_RenderCopy(renderer, texture, NULL, &rect);
 	SDL_RenderPresent(renderer);
 }
 
@@ -216,4 +297,21 @@ void platform_pixel(u32 x, u32 y, u32 c)
 {
 	if (pixels)
 		((u32 *)pixels)[(y * width) + x] = c;
+}
+
+/*
+ * platform_mouse
+ */
+
+void platform_mouse(int *x, int *y, int *dx, int *dy)
+{
+	/* apply ptrs */
+	if (x) *x = mouse.x;
+	if (y) *y = mouse.y;
+	if (dx) *dx = mouse.dx;
+	if (dy) *dy = mouse.dy;
+
+	/* reset delta? */
+	mouse.dx = 0;
+	mouse.dy = 0;
 }
