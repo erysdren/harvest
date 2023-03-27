@@ -43,41 +43,66 @@
 //
 //
 
-// std
-#include <iostream>
-#include <vector>
-#include <string>
-#include <stdint.h>
-#include <string.h>
-#include <stdarg.h>
-using namespace std;
-
 //
-// macros
-//
-
-// rgb
-#define ARGB(r, g, b, a) (((a) << 24) | ((r) << 16) | ((g) << 8) | (b))
-#define RGBA(r, g, b, a) (((r) << 24) | ((g) << 16) | ((b) << 8) | (a))
-
-// screen
-#define SCR_W 640
-#define SCR_H 480
-#define SCR_TITLE "Harvest Engine"
-#define SCR_BPP 32
-
-//
-// headers
-//
-
-// utilities
-#include "utilities.hpp"
-
-// renderer
-#include "renderer.hpp"
-
-// platform
-#include "platform.hpp"
-
 // world
-#include "world.hpp"
+//
+
+// triangle class
+class Triangle
+{
+	public:
+
+		// vertices that make up this triangle
+		uint16_t indices[3];
+
+		// constructor
+		Triangle(uint16_t x, uint16_t y, uint16_t z);
+};
+
+// vertex class
+class Vertex
+{
+	public:
+
+		// vertex coordinates
+		// (512 fractions per unit)
+		int32_t x, y, z;
+
+		// constructor
+		Vertex(int32_t x, int32_t y, int32_t z);
+};
+
+// plane class
+class Plane
+{
+	public:
+
+		// the four vertices that make up this plane
+		uint16_t vertex_indices[4];
+
+		// the sector that contains this plane
+		uint16_t sector_index;
+
+		// triangles contained in this plane
+		uint16_t triangle_start_index;
+		uint16_t triangle_end_index;
+};
+
+// node class
+class Node
+{
+	public:
+
+		// planes contained in this node
+		uint16_t plane_start_index;
+		uint16_t plane_end_index;
+};
+
+// globals
+extern vector<Vertex> vertices;
+extern vector<Triangle> triangles;
+extern vector<Plane> planes;
+extern vector<Node> nodes;
+
+// functions
+bool World_Init();

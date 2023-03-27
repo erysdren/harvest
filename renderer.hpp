@@ -43,41 +43,16 @@
 //
 //
 
-// std
-#include <iostream>
-#include <vector>
-#include <string>
-#include <stdint.h>
-#include <string.h>
-#include <stdarg.h>
-using namespace std;
-
 //
-// macros
-//
-
-// rgb
-#define ARGB(r, g, b, a) (((a) << 24) | ((r) << 16) | ((g) << 8) | (b))
-#define RGBA(r, g, b, a) (((r) << 24) | ((g) << 16) | ((b) << 8) | (a))
-
-// screen
-#define SCR_W 640
-#define SCR_H 480
-#define SCR_TITLE "Harvest Engine"
-#define SCR_BPP 32
-
-//
-// headers
-//
-
-// utilities
-#include "utilities.hpp"
-
 // renderer
-#include "renderer.hpp"
+//
 
-// platform
-#include "platform.hpp"
+// globals
+extern char scratch[256];
 
-// world
-#include "world.hpp"
+// functions
+void Renderer_DrawText(int x, int y, uint32_t c, const char *fmt, ...);
+void Renderer_DrawScene();
+bool Renderer_Init();
+void Renderer_Quit();
+void Renderer_Draw();

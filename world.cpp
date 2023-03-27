@@ -59,8 +59,8 @@
 
 vector<Vertex> vertices;
 vector<Triangle> triangles;
-vector<Wall> walls;
-vector<Sector> sectors;
+vector<Plane> planes;
+vector<Node> nodes;
 
 //
 // Triangle class
@@ -68,9 +68,9 @@ vector<Sector> sectors;
 
 Triangle::Triangle(uint16_t x, uint16_t y, uint16_t z)
 {
-	this->x = x;
-	this->y = y;
-	this->z = z;
+	this->indices[0] = x;
+	this->indices[1] = y;
+	this->indices[2] = z;
 }
 
 //

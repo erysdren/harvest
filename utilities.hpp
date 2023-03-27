@@ -43,41 +43,13 @@
 //
 //
 
-// std
-#include <iostream>
-#include <vector>
-#include <string>
-#include <stdint.h>
-#include <string.h>
-#include <stdarg.h>
-using namespace std;
-
 //
-// macros
-//
-
-// rgb
-#define ARGB(r, g, b, a) (((a) << 24) | ((r) << 16) | ((g) << 8) | (b))
-#define RGBA(r, g, b, a) (((r) << 24) | ((g) << 16) | ((b) << 8) | (a))
-
-// screen
-#define SCR_W 640
-#define SCR_H 480
-#define SCR_TITLE "Harvest Engine"
-#define SCR_BPP 32
-
-//
-// headers
-//
-
 // utilities
-#include "utilities.hpp"
+//
 
-// renderer
-#include "renderer.hpp"
-
-// platform
-#include "platform.hpp"
-
-// world
-#include "world.hpp"
+// functions
+void Error(const char *s);
+void Warning(const char *s);
+void *Memset8(void *d, uint8_t c, size_t n);
+void *Memset16(void *d, uint16_t c, size_t n);
+void *Memset32(void *d, uint32_t c, size_t n);

@@ -45,7 +45,7 @@
 
 CXXFLAGS += -O2
 
-SOURCES = main.cpp render.cpp utilities.cpp world.cpp
+SOURCES = main.cpp renderer.cpp utilities.cpp world.cpp
 OUTPUT = -o harvest
 PLATFORM = platform_sdl2.cpp `sdl2-config --cflags --libs`
 
