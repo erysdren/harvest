@@ -56,7 +56,7 @@
 
 void Error(const char *s)
 {
-	fprintf(stderr, "error: %s\n", s);
+	cerr << "error: " << s << endl;
 	exit(1);
 }
 
@@ -66,7 +66,7 @@ void Error(const char *s)
 
 void Warning(const char *s)
 {
-	cerr << "warning " << s << endl;
+	cerr << "warning: " << s << endl;
 }
 
 //
