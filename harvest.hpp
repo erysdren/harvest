@@ -134,10 +134,10 @@ class Wall
 {
 	public:
 
-		// vertex indices in the level mesh
-		vector<uint16_t> indices;
+		// triangle indices in the level mesh
+		vector<uint16_t> triangles;
 
-		// sectors this wall is touching
+		// sectors this wall is a part of
 		// if both are valid indices, it's a portal
 		int16_t sectors[2];
 };
