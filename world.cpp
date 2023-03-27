@@ -66,7 +66,7 @@ vector<Sector> sectors;
 // Triangle class
 //
 
-Triangle::Triangle(uint32_t x, uint32_t y, uint32_t z)
+Triangle::Triangle(uint16_t x, uint16_t y, uint16_t z)
 {
 	this->x = x;
 	this->y = y;
@@ -96,7 +96,7 @@ bool World_Init()
 	vertices.push_back(Vertex(-8, 8, -8));
 	vertices.push_back(Vertex(-8, -8, -8));
 	vertices.push_back(Vertex(8, -8, 8));
-	vertices.push_back(Vertex(-8, 8, 8));
+	vertices.push_back(Vertex(8, 8, 8));
 	vertices.push_back(Vertex(8, -8, -8));
 	vertices.push_back(Vertex(8, 8, -8));
 
@@ -110,5 +110,6 @@ bool World_Init()
 	triangles.push_back(Triangle(3, 4, 1));
 	triangles.push_back(Triangle(3, 6, 4));
 
+	// return true
 	return true;
 }

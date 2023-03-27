@@ -115,9 +115,9 @@ void Platform_GetMouse(int *x, int *y, int *dx, int *dy);
 class Triangle
 {
 	public:
-		uint32_t x, y, z;
+		uint16_t x, y, z;
 
-		Triangle(uint32_t x, uint32_t y, uint32_t z);
+		Triangle(uint16_t x, uint16_t y, uint16_t z);
 };
 
 // vertex class

@@ -73,7 +73,7 @@ int main(int argc, char **argv)
 		Platform_StartFrame();
 
 		// clear screen
-		Platform_ClearScreen(0);
+		Platform_ClearScreen(ARGB(0, 0, 0, 0));
 
 		// render 3d scene
 		Renderer_Draw();
