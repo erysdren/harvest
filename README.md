@@ -6,18 +6,8 @@ it's in a very early state right now.
 
 ## thirdparty
 
-* small3dlib (CC0)
-* font8x8 (Public Domain)
-
-## code guide
-
-| filenames  | function names | meaning  |
-|------------|----------------|----------|
-| h_*.c      | H_*            | harvest  |
-| p_*.c      | P_*            | platform |
-| r_*.c      | R_*            | renderer |
-| u_*.c      | U_*            | utility  |
-| w_*.c      | W_*            | world    |
+* [small3dlib](https://gitlab.com/drummyfish/small3dlib)
+* [font8x8](https://github.com/dhepper/font8x8)
 
 ## license
 
