@@ -66,11 +66,20 @@ vector<Node> nodes;
 // Triangle class
 //
 
+// constructor
 Triangle::Triangle(uint16_t x, uint16_t y, uint16_t z)
 {
 	this->indices[0] = x;
 	this->indices[1] = y;
 	this->indices[2] = z;
+}
+
+// constructor
+Triangle::Triangle()
+{
+	this->indices[0] = 0;
+	this->indices[1] = 0;
+	this->indices[2] = 0;
 }
 
 //
@@ -90,6 +99,10 @@ Vertex::Vertex(int32_t x, int32_t y, int32_t z)
 
 bool World_Init()
 {
+	// variables
+	Node node;
+	Plane p1, p2, p3, p4;
+
 	// box vertices
 	vertices.push_back(Vertex(-8, 8, 8));
 	vertices.push_back(Vertex(-8, -8, 8));
@@ -109,6 +122,34 @@ bool World_Init()
 	triangles.push_back(Triangle(0, 7, 2));
 	triangles.push_back(Triangle(3, 4, 1));
 	triangles.push_back(Triangle(3, 6, 4));
+
+	// planes
+	p1.node_index = 0;
+	p2.node_index = 0;
+	p3.node_index = 0;
+	p4.node_index = 0;
+
+	p1.triangle_start_index = 0;
+	p1.triangle_end_index = 2;
+
+	p2.triangle_start_index = 2;
+	p2.triangle_end_index = 4;
+
+	p3.triangle_start_index = 4;
+	p3.triangle_end_index = 6;
+
+	p4.triangle_start_index = 6;
+	p4.triangle_end_index = 8;
+
+	planes.push_back(p1);
+	planes.push_back(p2);
+	planes.push_back(p3);
+	planes.push_back(p4);
+
+	// node
+	node.plane_start_index = 0;
+	node.plane_end_index = 4;
+	nodes.push_back(node);
 
 	// return true
 	return true;

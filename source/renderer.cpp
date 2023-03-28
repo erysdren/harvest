@@ -70,6 +70,13 @@
 #include "thirdparty/small3dlib.h"
 
 //
+// macros
+//
+
+// max triangles in a plane
+#define MAX_TRIANGLES_PER_PLANE 8
+
+//
 // globals
 //
 
@@ -79,37 +86,7 @@ uint8_t *stencil;
 // scratch buffer
 char scratch[256];
 
-// test box vertices
-S3L_Unit box_vertices[] =
-{
-	-S3L_F*8, S3L_F*8, S3L_F*8,
-	-S3L_F*8, -S3L_F*8, S3L_F*8,
-	-S3L_F*8, S3L_F*8, -S3L_F*8,
-	-S3L_F*8, -S3L_F*8, -S3L_F*8,
-
-	S3L_F*8, -S3L_F*8, S3L_F*8,
-	S3L_F*8, S3L_F*8, S3L_F*8,
-	S3L_F*8, -S3L_F*8, -S3L_F*8,
-	S3L_F*8, S3L_F*8, -S3L_F*8
-};
-
-// test box indices
-S3L_Index box_indices[] =
-{
-	2, 1, 0,
-	1, 2, 3,
-
-	6, 5, 4,
-	5, 6, 7,
-
-	7, 0, 5,
-	0, 7, 2,
-
-	3, 4, 1,
-	3, 6, 4
-};
-
-S3L_Model3D box_model;
+// scene
 S3L_Scene scene;
 
 //
@@ -118,13 +95,15 @@ S3L_Scene scene;
 
 bool Renderer_Init()
 {
-	S3L_model3DInit(box_vertices, 24, box_indices, 8, &box_model);
-	S3L_sceneInit(&box_model, 1, &scene);
+	// init camera
+	S3L_cameraInit(&(scene.camera));
 	scene.camera.transform.translation.z = -16 * S3L_F;
 	scene.camera.transform.translation.y = S3L_F / 16;
 
+	// allocate stencil buffer
 	stencil = (uint8_t *)malloc(SCR_W * SCR_H * sizeof(uint8_t));
 
+	// return true
 	return true;
 }
 
@@ -138,57 +117,14 @@ void Renderer_Quit()
 }
 
 //
-// Renderer_Draw
+// Renderer_UpdateCamera
 //
 
-void Renderer_Draw()
-{
-	// variables
-	S3L_Model3D model;
-	S3L_Scene scene;
-
-	// init
-	S3L_model3DInit((const S3L_Unit *)&vertices[0], vertices.size() * 3, (const S3L_Index *)&triangles[0], triangles.size(), &model);
-	S3L_sceneInit(&model, 1, &scene);
-
-	scene.camera.transform.translation.z = -16 * S3L_F;
-	scene.camera.transform.translation.y = S3L_F / 16;
-
-	// render frame
-	S3L_newFrame();
-	S3L_drawScene(scene);
-}
-
-//
-// Renderer_DrawTriangle
-//
-
-void Renderer_DrawTriangle(Triangle &tri, S3L_Camera &camera)
-{
-	// variables
-	S3L_Model3D model;
-	S3L_Scene scene;
-	S3L_Index indices[3];
-
-	// assign camera
-	scene.camera = camera;
-
-	// init
-	S3L_model3DInit((const S3L_Unit *)&vertices[0], vertices.size() * 3, (const S3L_Index *)&tri.indices, 1, &model);
-	S3L_sceneInit(&model, 1, &scene);
-
-	// draw
-	S3L_drawScene(scene);
-}
-
-//
-// Renderer_DrawScene
-//
-
-void Renderer_DrawScene()
+void Renderer_UpdateScene()
 {
 	// variables
 	int dx, dy;
+	int i;
 
 	// get mouse
 	Platform_GetMouse(NULL, NULL, &dx, &dy);
@@ -207,18 +143,89 @@ void Renderer_DrawScene()
 	if (scene.camera.transform.rotation.y > 256)
 		scene.camera.transform.rotation.y -= 512;
 
+	// clean up all rendered flags
+	for (i = 0; i < nodes.size(); i++) nodes[i].rendered = false;
+}
+
+//
+// Renderer_DrawScene
+//
+
+void Renderer_DrawScene()
+{
+	// variables
+	S3L_Model3D model;
+
+	// init model
+	S3L_model3DInit(
+		(const S3L_Unit *)&vertices[0], vertices.size() * 3,
+		(const S3L_Index *)&triangles[0], triangles.size(), &model
+	);
+
+	// init scene
+	scene.models = &model;
+	scene.modelCount = 1;
+
 	// render frame
 	S3L_newFrame();
 	S3L_drawScene(scene);
 }
 
 //
-// Renderer_DrawSector
+// Renderer_DrawNode
 //
 
-void Renderer_DrawSector(int sector_id)
+void Renderer_DrawNode(int node_index)
 {
-	return;
+	// variables
+	int i, t;
+	Plane plane;
+	Node node;
+	Triangle tris[MAX_TRIANGLES_PER_PLANE];
+	S3L_Model3D model;
+	int num_tris;
+
+	// assign node
+	node = nodes[node_index];
+
+	// cycle through all planes
+	for (i = node.plane_start_index; i < node.plane_end_index; i++)
+	{
+		// assign plane
+		plane = planes[i];
+
+		// check for error
+		if (plane.node_index != node_index)
+		{
+			Warning("malformed plane & node pair!");
+			continue;
+		}
+
+		// collect indices
+		num_tris = 0;
+		for (t = plane.triangle_start_index; t < plane.triangle_end_index; t++)
+		{
+			// assign
+			tris[num_tris] = triangles[t];
+
+			// iterate num of triangles
+			num_tris++;
+		}
+
+		// init model
+		S3L_model3DInit(
+			(const S3L_Unit *)&vertices[0], vertices.size() * 3,
+			(const S3L_Index *)&tris[0], num_tris, &model
+		);
+
+		// init scene
+		scene.models = &model;
+		scene.modelCount = 1;
+
+		// draw the plane
+		S3L_newFrame();
+		S3L_drawScene(scene);
+	}
 }
 
 //
@@ -227,6 +234,10 @@ void Renderer_DrawSector(int sector_id)
 
 void S3L_Pixel(S3L_PixelInfo *p)
 {
+	// set stencil buffer coordinate to true
+	stencil[(p->y * SCR_W) + p->x] = 255;
+
+	// plot pixel
 	Platform_PlotPixel(p->x, p->y, ARGB(
 		(p->modelIndex + 1) * 16 + (p->triangleIndex + 1) * 16,
 		(p->modelIndex + 1) * 16 + (p->triangleIndex + 1) * 16,

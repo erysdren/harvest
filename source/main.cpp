@@ -75,8 +75,11 @@ int main(int argc, char **argv)
 		// clear screen
 		Platform_ClearScreen(ARGB(0, 0, 0, 0));
 
+		// update scene with user inputs
+		Renderer_UpdateScene();
+
 		// render 3d scene
-		Renderer_Draw();
+		Renderer_DrawNode(0);
 
 		// draw some text
 		Renderer_DrawText(4, 4, ARGB(255, 255, 255, 255), "hello world!");

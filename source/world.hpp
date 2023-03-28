@@ -55,8 +55,9 @@ class Triangle
 		// vertices that make up this triangle
 		uint16_t indices[3];
 
-		// constructor
+		// constructor2
 		Triangle(uint16_t x, uint16_t y, uint16_t z);
+		Triangle();
 };
 
 // vertex class
@@ -80,8 +81,8 @@ class Plane
 		// the four vertices that make up this plane
 		uint16_t vertex_indices[4];
 
-		// the sector that contains this plane
-		uint16_t sector_index;
+		// the node that contains this plane
+		uint16_t node_index;
 
 		// triangles contained in this plane
 		uint16_t triangle_start_index;
@@ -96,6 +97,9 @@ class Node
 		// planes contained in this node
 		uint16_t plane_start_index;
 		uint16_t plane_end_index;
+
+		// rendered flag
+		bool rendered;
 };
 
 // world class
