@@ -160,6 +160,28 @@ void Renderer_Draw()
 }
 
 //
+// Renderer_DrawTriangle
+//
+
+void Renderer_DrawTriangle(Triangle &tri, S3L_Camera &camera)
+{
+	// variables
+	S3L_Model3D model;
+	S3L_Scene scene;
+	S3L_Index indices[3];
+
+	// assign camera
+	scene.camera = camera;
+
+	// init
+	S3L_model3DInit((const S3L_Unit *)&vertices[0], vertices.size() * 3, (const S3L_Index *)&tri.indices, 1, &model);
+	S3L_sceneInit(&model, 1, &scene);
+
+	// draw
+	S3L_drawScene(scene);
+}
+
+//
 // Renderer_DrawScene
 //
 
