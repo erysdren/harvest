@@ -66,7 +66,7 @@ class Vertex
 
 		// vertex coordinates
 		// (512 fractions per unit)
-		int32_t x, y, z;
+		int32_t coordinates[3];
 
 		// constructor
 		Vertex(int32_t x, int32_t y, int32_t z);
@@ -96,6 +96,18 @@ class Node
 		// planes contained in this node
 		uint16_t plane_start_index;
 		uint16_t plane_end_index;
+};
+
+// world class
+class World
+{
+	public:
+
+		// level buffers
+		vector<Vertex> vertices;
+		vector<Triangle> triangles;
+		vector<Plane> planes;
+		vector<Node> nodes;
 };
 
 // globals

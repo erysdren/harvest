@@ -79,9 +79,9 @@ Triangle::Triangle(uint16_t x, uint16_t y, uint16_t z)
 
 Vertex::Vertex(int32_t x, int32_t y, int32_t z)
 {
-	this->x = x * FRAC;
-	this->y = y * FRAC;
-	this->z = z * FRAC;
+	this->coordinates[0] = x * FRAC;
+	this->coordinates[1] = y * FRAC;
+	this->coordinates[2] = z * FRAC;
 }
 
 //
