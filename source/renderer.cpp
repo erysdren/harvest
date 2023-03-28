@@ -145,6 +145,9 @@ void Renderer_UpdateScene()
 
 	// clean up all rendered flags
 	for (i = 0; i < nodes.size(); i++) nodes[i].rendered = false;
+
+	// clear z-buffer
+	S3L_newFrame();
 }
 
 //
@@ -181,9 +184,7 @@ void Renderer_DrawNode(int node_index)
 	int i, t;
 	Plane plane;
 	Node node;
-	Triangle tris[MAX_TRIANGLES_PER_PLANE];
 	S3L_Model3D model;
-	int num_tris;
 
 	// assign node
 	node = nodes[node_index];
@@ -194,28 +195,10 @@ void Renderer_DrawNode(int node_index)
 		// assign plane
 		plane = planes[i];
 
-		// check for error
-		if (plane.node_index != node_index)
-		{
-			Warning("malformed plane & node pair!");
-			continue;
-		}
-
-		// collect indices
-		num_tris = 0;
-		for (t = plane.triangle_start_index; t < plane.triangle_end_index; t++)
-		{
-			// assign
-			tris[num_tris] = triangles[t];
-
-			// iterate num of triangles
-			num_tris++;
-		}
-
 		// init model
 		S3L_model3DInit(
 			(const S3L_Unit *)&vertices[0], vertices.size() * 3,
-			(const S3L_Index *)&tris[0], num_tris, &model
+			(const S3L_Index *)&triangles[plane.triangle_start_index], plane.triangle_end_index - plane.triangle_start_index, &model
 		);
 
 		// init scene
@@ -223,7 +206,6 @@ void Renderer_DrawNode(int node_index)
 		scene.modelCount = 1;
 
 		// draw the plane
-		S3L_newFrame();
 		S3L_drawScene(scene);
 	}
 }
