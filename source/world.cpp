@@ -63,6 +63,26 @@ vector<Plane> planes;
 vector<Node> nodes;
 
 //
+// Vec3 class
+//
+
+// constructor
+Vec3::Vec3(int32_t x, int32_t y, int32_t z)
+{
+	this->x = x;
+	this->y = y;
+	this->z = z;
+}
+
+// constructor
+Vec3::Vec3()
+{
+	this->x = 0;
+	this->y = 0;
+	this->z = 0;
+}
+
+//
 // Triangle class
 //
 

@@ -44,92 +44,15 @@
 //
 
 //
-// world
+// player
 //
 
-// vec3 class
-class Vec3
+// player class
+class Player
 {
 	public:
-		int32_t x, y, z;
-
-		// constructors
-		Vec3(int32_t x, int32_t y, int32_t z);
-		Vec3();
-};
-
-// triangle class
-class Triangle
-{
-	public:
-
-		// vertices that make up this triangle
-		uint16_t indices[3];
-
-		// constructors
-		Triangle(uint16_t x, uint16_t y, uint16_t z);
-		Triangle();
-};
-
-// vertex class
-class Vertex
-{
-	public:
-
-		// vertex coordinates
-		// (512 fractions per unit)
-		int32_t coordinates[3];
-
-		// constructor
-		Vertex(int32_t x, int32_t y, int32_t z);
-};
-
-// plane class
-class Plane
-{
-	public:
-
-		// the four vertices that make up this plane
-		uint16_t vertex_indices[4];
-
-		// the nodes that contains this plane
-		uint16_t node_indices[2];
-
-		// triangles contained in this plane
-		uint16_t triangle_start_index;
-		uint16_t triangle_end_index;
-};
-
-// node class
-class Node
-{
-	public:
-
-		// planes contained in this node
-		uint16_t plane_start_index;
-		uint16_t plane_end_index;
-
-		// rendered flag
-		bool rendered;
-};
-
-// world class
-class World
-{
-	public:
-
-		// level buffers
-		vector<Vertex> vertices;
-		vector<Triangle> triangles;
-		vector<Plane> planes;
-		vector<Node> nodes;
+		Vec3 rotation;
 };
 
 // globals
-extern vector<Vertex> vertices;
-extern vector<Triangle> triangles;
-extern vector<Plane> planes;
-extern vector<Node> nodes;
-
-// functions
-bool World_Init();
+extern Player player;

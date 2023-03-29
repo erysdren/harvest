@@ -50,6 +50,7 @@ SOURCES = \
 	source/renderer.cpp \
 	source/utilities.cpp \
 	source/world.cpp \
+	source/player.cpp \
 
 OUTPUT = -o harvest
 

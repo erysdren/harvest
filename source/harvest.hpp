@@ -70,14 +70,17 @@ using namespace std;
 // headers
 //
 
-// utilities
-#include "utilities.hpp"
-
-// renderer
-#include "renderer.hpp"
-
 // platform
 #include "platform.hpp"
 
 // world
 #include "world.hpp"
+
+// player
+#include "player.hpp"
+
+// renderer
+#include "renderer.hpp"
+
+// utilities
+#include "utilities.hpp"
