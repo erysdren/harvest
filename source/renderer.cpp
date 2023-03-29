@@ -195,7 +195,8 @@ void Renderer_DrawNode(int node_index)
 		// init model
 		S3L_model3DInit(
 			(const S3L_Unit *)&vertices[0], vertices.size() * 3,
-			(const S3L_Index *)&triangles[plane.triangle_start_index], plane.triangle_end_index - plane.triangle_start_index, &model
+			(const S3L_Index *)&triangles[plane.triangle_start_index],
+			plane.triangle_end_index - plane.triangle_start_index, &model
 		);
 
 		// init scene
