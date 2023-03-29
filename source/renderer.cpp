@@ -94,8 +94,9 @@ bool Renderer_Init()
 {
 	// init camera
 	S3L_cameraInit(&(scene.camera));
-	scene.camera.transform.translation.z = -16 * S3L_F;
+	scene.camera.transform.translation.x = -16 * S3L_F;
 	scene.camera.transform.translation.y = S3L_F / 16;
+	scene.camera.transform.translation.z = -16 * S3L_F;
 
 	// return true
 	return true;

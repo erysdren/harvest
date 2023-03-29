@@ -81,8 +81,8 @@ class Plane
 		// the four vertices that make up this plane
 		uint16_t vertex_indices[4];
 
-		// the node that contains this plane
-		uint16_t node_index;
+		// the nodes that contains this plane
+		uint16_t node_indices[2];
 
 		// triangles contained in this plane
 		uint16_t triangle_start_index;

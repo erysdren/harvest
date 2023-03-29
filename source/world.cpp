@@ -124,11 +124,6 @@ bool World_Init()
 	triangles.push_back(Triangle(3, 6, 4));
 
 	// planes
-	p1.node_index = 0;
-	p2.node_index = 0;
-	p3.node_index = 0;
-	p4.node_index = 0;
-
 	p1.triangle_start_index = 0;
 	p1.triangle_end_index = 2;
 
