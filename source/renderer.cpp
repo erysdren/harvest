@@ -183,6 +183,9 @@ void Renderer_DrawNode(int node_index)
 	// assign node
 	node = nodes[node_index];
 
+	// if rendered, skip
+	if (node.rendered) return;
+
 	// cycle through all planes
 	for (i = node.plane_start_index; i < node.plane_end_index; i++)
 	{
@@ -202,6 +205,9 @@ void Renderer_DrawNode(int node_index)
 		// draw the plane
 		S3L_drawScene(scene);
 	}
+
+	// we've rendered this node
+	node.rendered = true;
 }
 
 //
