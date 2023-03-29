@@ -216,7 +216,7 @@ void Renderer_DrawNode(int node_index)
 // S3L_Pixel
 //
 
-void S3L_Pixel(S3L_PixelInfo *p)
+static inline void S3L_Pixel(S3L_PixelInfo *p)
 {
 	// plot pixel
 	Platform_PlotPixel(p->x, p->y, ARGB(
