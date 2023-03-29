@@ -7,6 +7,7 @@ it's in a very early state right now.
 ## thirdparty
 
 * [small3dlib](https://gitlab.com/drummyfish/small3dlib)
+* [tinyphysicsengine](https://gitlab.com/drummyfish/tinyphysicsengine)
 * [font8x8](https://github.com/dhepper/font8x8)
 
 ## license
