@@ -80,9 +80,6 @@
 // globals
 //
 
-// stencil buffer
-uint8_t *stencil;
-
 // scratch buffer
 char scratch[256];
 
@@ -100,9 +97,6 @@ bool Renderer_Init()
 	scene.camera.transform.translation.z = -16 * S3L_F;
 	scene.camera.transform.translation.y = S3L_F / 16;
 
-	// allocate stencil buffer
-	stencil = (uint8_t *)malloc(SCR_W * SCR_H * sizeof(uint8_t));
-
 	// return true
 	return true;
 }
@@ -113,7 +107,7 @@ bool Renderer_Init()
 
 void Renderer_Quit()
 {
-	if (stencil) free(stencil);
+
 }
 
 //
@@ -216,9 +210,6 @@ void Renderer_DrawNode(int node_index)
 
 void S3L_Pixel(S3L_PixelInfo *p)
 {
-	// set stencil buffer coordinate to true
-	stencil[(p->y * SCR_W) + p->x] = 255;
-
 	// plot pixel
 	Platform_PlotPixel(p->x, p->y, ARGB(
 		(p->modelIndex + 1) * 16 + (p->triangleIndex + 1) * 16,
