@@ -74,6 +74,9 @@ int main(int argc, char **argv)
 		// poll events
 		Platform_StartFrame();
 
+		// quit on esc
+		if (Platform_KeyDown(KEY_ESCAPE)) break;
+
 		// clear screen
 		Platform_ClearScreen(ARGB(0, 0, 0, 0));
 
@@ -84,7 +87,7 @@ int main(int argc, char **argv)
 		Renderer_DrawNode(0);
 
 		// draw some text
-		Renderer_DrawText(4, 4, ARGB(255, 255, 255, 255), "hello world!");
+		Renderer_DrawText(4, 4, ARGB(255, 255, 255, 255), "press escape to quit");
 
 		// put frame to screen
 		Platform_EndFrame();

@@ -47,7 +47,7 @@
 // keyboard scancodes
 //
 
-typedef enum
+enum
 {
 	KEY_A = 4,
 	KEY_B = 5,
@@ -262,7 +262,7 @@ typedef enum
 	KEY_RALT = 230,
 	KEY_RGUI = 231,
 	KEY_MODE = 257
-} SDL_Scancode;
+};
 
 //
 // platform
