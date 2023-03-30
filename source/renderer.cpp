@@ -139,34 +139,10 @@ void Renderer_UpdateScene()
 		scene.camera.transform.rotation.y -= 512;
 
 	// clean up all rendered flags
-	for (i = 0; i < nodes.size(); i++) nodes[i].rendered = false;
+	for (i = 0; i < world.nodes.size(); i++) world.nodes[i].rendered = false;
 
 	// clear z-buffer
 	S3L_newFrame();
-}
-
-//
-// Renderer_DrawScene
-//
-
-void Renderer_DrawScene()
-{
-	// variables
-	S3L_Model3D model;
-
-	// init model
-	S3L_model3DInit(
-		(const S3L_Unit *)&vertices[0], vertices.size() * 3,
-		(const S3L_Index *)&triangles[0], triangles.size(), &model
-	);
-
-	// init scene
-	scene.models = &model;
-	scene.modelCount = 1;
-
-	// render frame
-	S3L_newFrame();
-	S3L_drawScene(scene);
 }
 
 //
@@ -182,7 +158,7 @@ void Renderer_DrawNode(int node_index)
 	S3L_Model3D model;
 
 	// assign node
-	node = nodes[node_index];
+	node = world.nodes[node_index];
 
 	// if rendered, skip
 	if (node.rendered) return;
@@ -191,12 +167,12 @@ void Renderer_DrawNode(int node_index)
 	for (i = node.plane_start_index; i < node.plane_end_index; i++)
 	{
 		// assign plane
-		plane = planes[i];
+		plane = world.planes[i];
 
 		// init model
 		S3L_model3DInit(
-			(const S3L_Unit *)&vertices[0], vertices.size() * 3,
-			(const S3L_Index *)&triangles[plane.triangle_start_index],
+			(const S3L_Unit *)&world.vertices[0], world.vertices.size() * 3,
+			(const S3L_Index *)&world.triangles[plane.triangle_start_index],
 			plane.triangle_end_index - plane.triangle_start_index, &model
 		);
 

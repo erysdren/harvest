@@ -57,10 +57,7 @@
 // globals
 //
 
-vector<Vertex> vertices;
-vector<Triangle> triangles;
-vector<Plane> planes;
-vector<Node> nodes;
+World world;
 
 //
 // Vec3 class
@@ -124,24 +121,24 @@ bool World_Init()
 	Plane p1, p2, p3, p4;
 
 	// box vertices
-	vertices.push_back(Vertex(-8, 8, 8));
-	vertices.push_back(Vertex(-8, -8, 8));
-	vertices.push_back(Vertex(-8, 8, -8));
-	vertices.push_back(Vertex(-8, -8, -8));
-	vertices.push_back(Vertex(8, -8, 8));
-	vertices.push_back(Vertex(8, 8, 8));
-	vertices.push_back(Vertex(8, -8, -8));
-	vertices.push_back(Vertex(8, 8, -8));
+	world.vertices.push_back(Vertex(-8, 8, 8));
+	world.vertices.push_back(Vertex(-8, -8, 8));
+	world.vertices.push_back(Vertex(-8, 8, -8));
+	world.vertices.push_back(Vertex(-8, -8, -8));
+	world.vertices.push_back(Vertex(8, -8, 8));
+	world.vertices.push_back(Vertex(8, 8, 8));
+	world.vertices.push_back(Vertex(8, -8, -8));
+	world.vertices.push_back(Vertex(8, 8, -8));
 
 	// box triangles
-	triangles.push_back(Triangle(2, 1, 0));
-	triangles.push_back(Triangle(1, 2, 3));
-	triangles.push_back(Triangle(6, 5, 4));
-	triangles.push_back(Triangle(5, 6, 7));
-	triangles.push_back(Triangle(7, 0, 5));
-	triangles.push_back(Triangle(0, 7, 2));
-	triangles.push_back(Triangle(3, 4, 1));
-	triangles.push_back(Triangle(3, 6, 4));
+	world.triangles.push_back(Triangle(2, 1, 0));
+	world.triangles.push_back(Triangle(1, 2, 3));
+	world.triangles.push_back(Triangle(6, 5, 4));
+	world.triangles.push_back(Triangle(5, 6, 7));
+	world.triangles.push_back(Triangle(7, 0, 5));
+	world.triangles.push_back(Triangle(0, 7, 2));
+	world.triangles.push_back(Triangle(3, 4, 1));
+	world.triangles.push_back(Triangle(3, 6, 4));
 
 	// planes
 	p1.triangle_start_index = 0;
@@ -156,16 +153,25 @@ bool World_Init()
 	p4.triangle_start_index = 6;
 	p4.triangle_end_index = 8;
 
-	planes.push_back(p1);
-	planes.push_back(p2);
-	planes.push_back(p3);
-	planes.push_back(p4);
+	world.planes.push_back(p1);
+	world.planes.push_back(p2);
+	world.planes.push_back(p3);
+	world.planes.push_back(p4);
 
 	// node
 	node.plane_start_index = 0;
 	node.plane_end_index = 4;
-	nodes.push_back(node);
+	world.nodes.push_back(node);
 
 	// return true
 	return true;
+}
+
+//
+// World_Quit
+//
+
+void World_Quit()
+{
+
 }

@@ -53,7 +53,6 @@ extern char scratch[256];
 // functions
 void Renderer_DrawText(int x, int y, uint32_t c, const char *fmt, ...);
 void Renderer_UpdateScene();
-void Renderer_DrawScene();
 void Renderer_DrawNode(int node_index);
 bool Renderer_Init();
 void Renderer_Quit();

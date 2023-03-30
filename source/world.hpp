@@ -126,10 +126,8 @@ class World
 };
 
 // globals
-extern vector<Vertex> vertices;
-extern vector<Triangle> triangles;
-extern vector<Plane> planes;
-extern vector<Node> nodes;
+extern World world;
 
 // functions
 bool World_Init();
+void World_Quit();

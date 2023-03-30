@@ -64,6 +64,8 @@ int main(int argc, char **argv)
 	if (!Platform_Init()) Error("failed to init platform");
 	if (!World_Init()) Error("failed to init world");
 	if (!Renderer_Init()) Error("failed to init renderer");
+
+	// init screen
 	if (!Platform_InitScreen(SCR_W, SCR_H, SCR_TITLE)) Error("failed to init platform screen");
 
 	// main loop
@@ -90,6 +92,7 @@ int main(int argc, char **argv)
 
 	// quit
 	Renderer_Quit();
+	World_Quit();
 	Platform_Quit();
 
 	// exit gracefully
