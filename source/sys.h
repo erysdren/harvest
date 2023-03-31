@@ -47,6 +47,8 @@
  * utilities
  */
 
+extern char sys_scratch[256];
+
 void sys_error(const char *s);
 void sys_warning(const char *s);
 void sys_message(const char *s);

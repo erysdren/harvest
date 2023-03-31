@@ -47,39 +47,65 @@
  * headers
  */
 
-/* std */
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdarg.h>
-#include <string.h>
+/* harvest engine */
+#include "harvest.h"
+
+/* font8x8 */
+#include "font8x8_basic.h"
 
 /*
- * types
+ * renderer_draw_font8x8
  */
 
-typedef unsigned char u8;
-typedef unsigned short u16;
-typedef unsigned int u32;
-typedef unsigned long u64;
+void renderer_draw_font8x8(int x, int y, u32 c, u8 *bitmap)
+{
+	/* variables */
+	int xx, yy;
+
+	/* plot loop */
+	for (yy = 0; yy < 8; yy++)
+	{
+		for (xx = 0; xx < 8; xx++)
+		{
+			if (x + xx > SCR_W - 1 || y + yy > SCR_H - 1) return;
+
+			if (bitmap[yy] & 1 << xx)
+				platform_draw_pixel(x + xx, y + yy, c);
+		}
+	}
+}
 
 /*
- * macros
+ * renderer_draw_text
  */
 
-#define SCR_W 640
-#define SCR_H 480
-#define SCR_TITLE "harvest engine"
-#define SCR_BPP 32
+void renderer_draw_text(int x, int y, u32 c, const char *fmt, ...)
+{
+	/* variables */
+	int i, p, n;
+	va_list va;
 
-#define ARGB(r, g, b, a) (((a) << 24) | ((r) << 16) | ((g) << 8) | (b))
-#define RGBA(r, g, b, a) (((r) << 24) | ((g) << 16) | ((b) << 8) | (a))
+	/* process vargs */
+	va_start(va, fmt);
+	vsprintf(sys_scratch, fmt, va);
+	va_end(va);
 
-#define RGB(r, g, b) ARGB(r, g, b, 255)
+	/* plot loop */
+	p = 0;
+	for (i = 0; i < strlen(sys_scratch); i++)
+	{
+		/* check for newlines */
+		if (sys_scratch[i] == '\n')
+		{
+			y += 8;
+			x -= (p + 1) * 8;
+			p = 0;
+			continue;
+		}
 
-/*
- * engine headers
- */
+		p++;
 
-#include "platform.h"
-#include "sys.h"
-#include "renderer.h"
+		n = sys_scratch[i];
+		renderer_draw_font8x8(x + (i * 8), y, c, font8x8_basic[n]);
+	}
+}

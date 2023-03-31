@@ -44,42 +44,7 @@
  */
 
 /*
- * headers
+ * renderer
  */
 
-/* std */
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdarg.h>
-#include <string.h>
-
-/*
- * types
- */
-
-typedef unsigned char u8;
-typedef unsigned short u16;
-typedef unsigned int u32;
-typedef unsigned long u64;
-
-/*
- * macros
- */
-
-#define SCR_W 640
-#define SCR_H 480
-#define SCR_TITLE "harvest engine"
-#define SCR_BPP 32
-
-#define ARGB(r, g, b, a) (((a) << 24) | ((r) << 16) | ((g) << 8) | (b))
-#define RGBA(r, g, b, a) (((r) << 24) | ((g) << 16) | ((b) << 8) | (a))
-
-#define RGB(r, g, b) ARGB(r, g, b, 255)
-
-/*
- * engine headers
- */
-
-#include "platform.h"
-#include "sys.h"
-#include "renderer.h"
+void renderer_draw_text(int x, int y, u32 c, const char *fmt, ...);

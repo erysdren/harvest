@@ -47,10 +47,6 @@
  * headers
  */
 
-/* std */
-#include <stdio.h>
-#include <stdlib.h>
-
 /* harvest engine */
 #include "harvest.h"
 
@@ -69,6 +65,12 @@ int main(int argc, char **argv)
 	{
 		/* poll events */
 		platform_frame_start();
+
+		/* quit on esc */
+		if (platform_key(KEY_ESCAPE)) break;
+
+		/* draw some text */
+		renderer_draw_text(2, 2, RGB(255, 255, 255), "hello world");
 
 		/* show frame on screen*/
 		platform_frame_end();

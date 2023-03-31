@@ -270,7 +270,8 @@ void platform_frame_end()
 	calc_screen_pos(x, y, &rect);
 	calc_screen_size(x, y, &rect);
 
-	SDL_UpdateTexture(context.texture, NULL, context.pixels, context.width * sizeof(u32));
+	SDL_UpdateTexture(context.texture, NULL, context.pixels, 
+		context.width * sizeof(u32));
 	SDL_RenderClear(context.renderer);
 	SDL_RenderCopy(context.renderer, context.texture, NULL, &rect);
 	SDL_RenderPresent(context.renderer);

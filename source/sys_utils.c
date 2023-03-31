@@ -47,12 +47,15 @@
  * headers
  */
 
-/* std */
-#include <stdio.h>
-#include <stdlib.h>
-
 /* harvest engine */
 #include "harvest.h"
+
+/*
+ * globals
+ */
+
+/* scratch buffer */
+char sys_scratch[256];
 
 /*
  * sys_error
