@@ -43,18 +43,15 @@
 ##
 ##
 
-CXXFLAGS += -O2 -Isource
+CFLAGS += -std=c89 -Wall -pedantic -O3 -Isource
 
 SOURCES = \
-	source/main.cpp \
-	source/renderer.cpp \
-	source/utilities.cpp \
-	source/world.cpp \
-	source/player.cpp \
+	source/sys_utils.c \
+	source/sys_main.c \
 
 OUTPUT = -o harvest
 
-PLATFORM_SDL2 = source/platforms/sdl2.cpp `sdl2-config --cflags --libs`
+PLATFORM_SDL2 = source/platform_sdl2.c `sdl2-config --cflags --libs`
 
 ##
 ## targets
@@ -63,7 +60,7 @@ PLATFORM_SDL2 = source/platforms/sdl2.cpp `sdl2-config --cflags --libs`
 all: clean harvest
 
 harvest: $(SOURCES)
-	$(CXX) $(OUTPUT) $(SOURCES) $(PLATFORM_SDL2) $(CXXFLAGS)
+	$(CC) $(OUTPUT) $(SOURCES) $(PLATFORM_SDL2) $(CFLAGS)
 
 clean:
 	$(RM) harvest *.exe
