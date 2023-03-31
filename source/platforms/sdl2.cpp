@@ -87,11 +87,14 @@ struct mouse_t
 
 bool keys[256];
 
+namespace Platform
+{
+
 //
-// Platform_Init
+// Init
 //
 
-bool Platform_Init()
+bool Init()
 {
 	should_quit = false;
 
@@ -104,10 +107,10 @@ bool Platform_Init()
 }
 
 //
-// Platform_InitScreen
+// InitScreen
 //
 
-bool Platform_InitScreen(int w, int h, const char *title)
+bool InitScreen(int w, int h, const char *title)
 {
 	window = SDL_CreateWindow(
 		title,
@@ -149,10 +152,10 @@ bool Platform_InitScreen(int w, int h, const char *title)
 }
 
 //
-// Platform_Quit
+// Quit
 //
 
-void Platform_Quit()
+void Quit()
 {
 	if (texture != NULL) SDL_DestroyTexture(texture);
 	if (renderer != NULL) SDL_DestroyRenderer(renderer);
@@ -163,19 +166,19 @@ void Platform_Quit()
 }
 
 //
-// Platform_ShouldQuit
+// ShouldQuit
 //
 
-bool Platform_ShouldQuit()
+bool ShouldQuit()
 {
 	return should_quit;
 }
 
 //
-// Platform_StartFrame
+// StartFrame
 //
 
-void Platform_StartFrame()
+void StartFrame()
 {
 	/* variables */
 	SDL_Event event;
@@ -254,10 +257,10 @@ void CalcScreenPos(int x, int y, SDL_Rect *rect)
 }
 
 //
-// Platform_EndFrame
+// EndFrame
 //
 
-void Platform_EndFrame()
+void EndFrame()
 {
 	int x, y;
 	SDL_Rect rect;
@@ -273,37 +276,37 @@ void Platform_EndFrame()
 }
 
 //
-// Platform_ClearScreen
+// ClearScreen
 //
 
-void Platform_ClearScreen(uint32_t c)
+void ClearScreen(uint32_t c)
 {
 	Memset32(pixels, c, width * height);
 }
 
 //
-// Platform_KeyDown
+// KeyDown
 //
 
-bool Platform_KeyDown(int sc)
+bool KeyDown(int sc)
 {
 	return keys[sc];
 }
 
 //
-// Platform_PlotPixel
+// PlotPixel
 //
 
-void Platform_PlotPixel(uint32_t x, uint32_t y, uint32_t c)
+void PlotPixel(uint32_t x, uint32_t y, uint32_t c)
 {
 	((uint32_t *)pixels)[(y * width) + x] = c;
 }
 
 //
-// Platform_GetMouse
+// GetMouse
 //
 
-void Platform_GetMouse(int *x, int *y, int *dx, int *dy)
+void GetMouse(int *x, int *y, int *dx, int *dy)
 {
 	if (x) *x = mouse.x;
 	if (y) *y = mouse.y;
@@ -313,3 +316,5 @@ void Platform_GetMouse(int *x, int *y, int *dx, int *dy)
 	mouse.dx = 0;
 	mouse.dy = 0;
 }
+
+} // namespace Platform

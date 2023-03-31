@@ -87,10 +87,27 @@ char scratch[256];
 S3L_Scene scene;
 
 //
-// Renderer_Init
+// S3L_Pixel
 //
 
-bool Renderer_Init()
+static inline void S3L_Pixel(S3L_PixelInfo *p)
+{
+	// plot pixel
+	Platform::PlotPixel(p->x, p->y, ARGB(
+		(p->modelIndex + 1) * 16 + (p->triangleIndex + 1) * 16,
+		(p->modelIndex + 1) * 16 + (p->triangleIndex + 1) * 16,
+		(p->modelIndex + 1) * 16 + (p->triangleIndex + 1) * 16,
+		255));
+}
+
+namespace Renderer
+{
+
+//
+// Init
+//
+
+bool Init()
 {
 	// init camera
 	S3L_cameraInit(&(scene.camera));
@@ -103,26 +120,26 @@ bool Renderer_Init()
 }
 
 //
-// Renderer_Quit
+// Quit
 //
 
-void Renderer_Quit()
+void Quit()
 {
 
 }
 
 //
-// Renderer_UpdateCamera
+// UpdateCamera
 //
 
-void Renderer_UpdateScene()
+void UpdateScene()
 {
 	// variables
 	int dx, dy;
 	int i;
 
 	// get mouse
-	Platform_GetMouse(NULL, NULL, &dx, &dy);
+	Platform::GetMouse(NULL, NULL, &dx, &dy);
 
 	// update camera
 	scene.camera.transform.rotation.x -= dy;
@@ -146,10 +163,10 @@ void Renderer_UpdateScene()
 }
 
 //
-// Renderer_DrawNode
+// DrawNode
 //
 
-void Renderer_DrawNode(int node_index)
+void DrawNode(int node_index)
 {
 	// variables
 	int i, t;
@@ -189,24 +206,10 @@ void Renderer_DrawNode(int node_index)
 }
 
 //
-// S3L_Pixel
+// DrawFont8x8
 //
 
-static inline void S3L_Pixel(S3L_PixelInfo *p)
-{
-	// plot pixel
-	Platform_PlotPixel(p->x, p->y, ARGB(
-		(p->modelIndex + 1) * 16 + (p->triangleIndex + 1) * 16,
-		(p->modelIndex + 1) * 16 + (p->triangleIndex + 1) * 16,
-		(p->modelIndex + 1) * 16 + (p->triangleIndex + 1) * 16,
-		255));
-}
-
-//
-// Renderer_DrawFont8x8
-//
-
-void Renderer_DrawFont8x8(int x, int y, uint32_t c, unsigned char *bitmap)
+void DrawFont8x8(int x, int y, uint32_t c, unsigned char *bitmap)
 {
 	/* variables */
 	int xx, yy;
@@ -219,16 +222,16 @@ void Renderer_DrawFont8x8(int x, int y, uint32_t c, unsigned char *bitmap)
 			if (x + xx > SCR_W - 1 || y + yy > SCR_H - 1) return;
 
 			if (bitmap[yy] & 1 << xx)
-				Platform_PlotPixel(x + xx, y + yy, c);
+				Platform::PlotPixel(x + xx, y + yy, c);
 		}
 	}
 }
 
 //
-// Renderer_DrawText
+// DrawText
 //
 
-void Renderer_DrawText(int x, int y, uint32_t c, const char *fmt, ...)
+void DrawText(int x, int y, uint32_t c, const char *fmt, ...)
 {
 	/* variables */
 	int i, p;
@@ -253,6 +256,8 @@ void Renderer_DrawText(int x, int y, uint32_t c, const char *fmt, ...)
 
 		p++;
 
-		Renderer_DrawFont8x8(x + (i * 8), y, c, font8x8_basic[scratch[i]]);
+		DrawFont8x8(x + (i * 8), y, c, font8x8_basic[scratch[i]]);
 	}
 }
+
+} // namespace Renderer

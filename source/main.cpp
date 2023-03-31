@@ -61,42 +61,42 @@
 int main(int argc, char **argv)
 {
 	// init
-	if (!Platform_Init()) Error("failed to init platform");
-	if (!World_Init()) Error("failed to init world");
-	if (!Renderer_Init()) Error("failed to init renderer");
+	if (!Platform::Init()) Error("failed to init platform");
+	if (!World::Init()) Error("failed to init world");
+	if (!Renderer::Init()) Error("failed to init renderer");
 
 	// init screen
-	if (!Platform_InitScreen(SCR_W, SCR_H, SCR_TITLE)) Error("failed to init platform screen");
+	if (!Platform::InitScreen(SCR_W, SCR_H, SCR_TITLE)) Error("failed to init platform screen");
 
 	// main loop
-	while (!Platform_ShouldQuit())
+	while (!Platform::ShouldQuit())
 	{
 		// poll events
-		Platform_StartFrame();
+		Platform::StartFrame();
 
 		// quit on esc
-		if (Platform_KeyDown(KEY_ESCAPE)) break;
+		if (Platform::KeyDown(KEY_ESCAPE)) break;
 
 		// clear screen
-		Platform_ClearScreen(ARGB(0, 0, 0, 0));
+		Platform::ClearScreen(ARGB(0, 0, 0, 0));
 
 		// update scene with user inputs
-		Renderer_UpdateScene();
+		Renderer::UpdateScene();
 
 		// render 3d scene
-		Renderer_DrawNode(0);
+		Renderer::DrawNode(0);
 
 		// draw some text
-		Renderer_DrawText(4, 4, ARGB(255, 255, 255, 255), "press escape to quit");
+		Renderer::DrawText(4, 4, ARGB(255, 255, 255, 255), "press escape to quit");
 
 		// put frame to screen
-		Platform_EndFrame();
+		Platform::EndFrame();
 	}
 
 	// quit
-	Renderer_Quit();
-	World_Quit();
-	Platform_Quit();
+	Renderer::Quit();
+	World::Quit();
+	Platform::Quit();
 
 	// exit gracefully
 	return 0;

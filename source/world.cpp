@@ -57,7 +57,7 @@
 // globals
 //
 
-World world;
+Level world;
 
 //
 // Vec3 class
@@ -110,11 +110,14 @@ Vertex::Vertex(int32_t x, int32_t y, int32_t z)
 	this->coordinates[2] = z * FRAC;
 }
 
+namespace World
+{
+
 //
-// World_Init
+// Init
 //
 
-bool World_Init()
+bool Init()
 {
 	// variables
 	Node node;
@@ -168,10 +171,12 @@ bool World_Init()
 }
 
 //
-// World_Quit
+// Quit
 //
 
-void World_Quit()
+void Quit()
 {
 
 }
+
+} // namespace World

@@ -268,14 +268,18 @@ enum
 // platform
 //
 
-// functions
-bool Platform_Init();
-bool Platform_InitScreen(int w, int h, const char *title);
-void Platform_Quit();
-bool Platform_ShouldQuit();
-void Platform_StartFrame();
-void Platform_EndFrame();
-void Platform_ClearScreen(uint32_t c);
-bool Platform_KeyDown(int sc);
-void Platform_PlotPixel(uint32_t x, uint32_t y, uint32_t c);
-void Platform_GetMouse(int *x, int *y, int *dx, int *dy);
+namespace Platform
+{
+
+bool Init();
+bool InitScreen(int w, int h, const char *title);
+void Quit();
+bool ShouldQuit();
+void StartFrame();
+void EndFrame();
+void ClearScreen(uint32_t c);
+bool KeyDown(int sc);
+void PlotPixel(uint32_t x, uint32_t y, uint32_t c);
+void GetMouse(int *x, int *y, int *dx, int *dy);
+
+} // namespace Platform

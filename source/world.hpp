@@ -113,8 +113,8 @@ class Node
 		bool rendered;
 };
 
-// world class
-class World
+// level class
+class Level
 {
 	public:
 
@@ -126,8 +126,13 @@ class World
 };
 
 // globals
-extern World world;
+extern Level world;
+
+namespace World
+{
 
 // functions
-bool World_Init();
-void World_Quit();
+bool Init();
+void Quit();
+
+} // namespace World
