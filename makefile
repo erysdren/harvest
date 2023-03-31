@@ -43,12 +43,13 @@
 ##
 ##
 
-CFLAGS += -std=c89 -Wall -pedantic -O3 -Isource -Isource/thirdparty
+CFLAGS += -O3 -Isource -Isource/thirdparty
 
 SOURCES = \
 	source/sys_utils.c \
 	source/sys_main.c \
 	source/renderer_text.c \
+	source/s3l.c \
 
 OUTPUT = -o harvest
 

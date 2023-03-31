@@ -44,48 +44,85 @@
  */
 
 /*
- * headers
- */
-
-/* std */
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdarg.h>
-#include <string.h>
-
-/*
  * types
  */
 
-typedef char s8;
-typedef short s16;
-typedef int s32;
+/* root types */
+typedef s32 S3L_Unit;
+typedef s16 S3L_ScreenCoord;
+typedef u16 S3L_Index;
 
-typedef unsigned char u8;
-typedef unsigned short u16;
-typedef unsigned int u32;
+/* vec4 */
+typedef struct
+{
+	S3L_Unit x;
+	S3L_Unit y;
+	S3L_Unit z;
+	S3L_Unit w;
+} S3L_Vec4;
 
-/*
- * macros
- */
+/* 3d transform matrix */
+typedef struct
+{
+	S3L_Vec4 translation;
+	S3L_Vec4 rotation;
+	S3L_Vec4 scale;
+} S3L_Transform3D;
 
-#define SCR_W 640
-#define SCR_H 480
-#define SCR_TITLE "harvest engine"
-#define SCR_BPP 32
+/* 4x4 matrix */
+typedef S3L_Unit S3L_Mat4[4][4]; 
 
-#define ARGB(r, g, b, a) (((a) << 24) | ((r) << 16) | ((g) << 8) | (b))
-#define RGBA(r, g, b, a) (((r) << 24) | ((g) << 16) | ((b) << 8) | (a))
+/* camera */
+typedef struct
+{
+	S3L_Unit focalLength;
+	S3L_Transform3D transform;
+} S3L_Camera;
 
-#define RGB(r, g, b) ARGB(r, g, b, 255)
+/* draw config for a model */
+typedef struct
+{
+	u8 backfaceCulling;
+	s8 visible;
+} S3L_DrawConfig;
 
-/*
- * engine headers
- */
+/* 3d model */
+typedef struct
+{
+	const S3L_Unit *vertices;
+	S3L_Index vertexCount;
+	const S3L_Index *triangles;
+	S3L_Index triangleCount;
+	S3L_Transform3D transform;
+	S3L_Mat4 *customTransformMatrix;
+	S3L_DrawConfig config;
+} S3L_Model3D;
 
-#include "platform.h"
-#include "sys.h"
-#include "renderer.h"
-#include "s3l_types.h"
-#include "s3l.h"
-#include "s3l_inline.h"
+/* 3d scene */
+typedef struct
+{
+	S3L_Model3D *models;
+	S3L_Index modelCount;
+	S3L_Camera camera;
+} S3L_Scene;
+
+/* pixel info */
+typedef struct
+{
+	S3L_ScreenCoord x;
+	S3L_ScreenCoord y;
+	S3L_Unit barycentric[3];
+	S3L_Index modelIndex;
+	S3L_Index triangleIndex;
+	u32 triangleID;
+	S3L_Unit depth;
+	S3L_Unit previousZ;
+	S3L_ScreenCoord triangleSize[2];
+} S3L_PixelInfo;
+
+/* fast lerp state */
+typedef struct
+{
+	S3L_Unit valueScaled;
+	S3L_Unit stepScaled;
+} S3L_FastLerpState;
