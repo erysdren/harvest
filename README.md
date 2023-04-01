@@ -1,6 +1,6 @@
 # harvest engine
 
-a software-rendered 3d portal engine in C++
+a software-rendered game engine written in pure C99
 
 it's in a very early state right now.
 
