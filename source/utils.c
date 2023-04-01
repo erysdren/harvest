@@ -51,37 +51,41 @@
 #include "harvest.h"
 
 /*
- * main
+ * globals
  */
 
-int main(int argc, char **argv)
+/* scratch buffer */
+char scratch[256];
+
+/*
+ * memset8
+ */
+
+void *memset8(void *d, uint8_t c, size_t n)
 {
-	/* init */
-	if (!platform_init(640, 480, "harvest engine"))
-		platform_error("failed to init platform");
+	uint8_t *p = (uint8_t *)d;
+	while (n--) p[n] = c;
+	return d;
+}
 
-	/* main loop */
-	while (platform_running())
-	{
-		/* poll events */
-		platform_frame_start();
+/*
+ * memset16
+ */
 
-		/* quit on esc */
-		if (platform_key(KEY_ESCAPE)) break;
+void *memset16(void *d, uint16_t c, size_t n)
+{
+	uint16_t *p = (uint16_t *)d;
+	while (n--) p[n] = c;
+	return d;
+}
 
-		/* clear screen */
-		platform_screen_clear(RGB(100, 200, 255));
+/*
+ * memset32
+ */
 
-		/* draw some text */
-		renderer_draw_text(2, 2, RGB(255, 255, 255), "hello world");
-
-		/* show frame on screen*/
-		platform_frame_end();
-	}
-
-	/* quit */
-	platform_quit();
-
-	/* exit gracefully */
-	return 0;
+void *memset32(void *d, uint32_t c, size_t n)
+{
+	uint32_t *p = (uint32_t *)d;
+	while (n--) p[n] = c;
+	return d;
 }

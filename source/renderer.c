@@ -87,15 +87,15 @@ void renderer_draw_text(int x, int y, uint32_t c, const char *fmt, ...)
 
 	/* process vargs */
 	va_start(va, fmt);
-	vsprintf(sys_scratch, fmt, va);
+	vsnprintf(scratch, sizeof(scratch), fmt, va);
 	va_end(va);
 
 	/* plot loop */
 	p = 0;
-	for (i = 0; i < strlen(sys_scratch); i++)
+	for (i = 0; i < strlen(scratch); i++)
 	{
 		/* check for newlines */
-		if (sys_scratch[i] == '\n')
+		if (scratch[i] == '\n')
 		{
 			y += 8;
 			x -= (p + 1) * 8;
@@ -105,7 +105,7 @@ void renderer_draw_text(int x, int y, uint32_t c, const char *fmt, ...)
 
 		p++;
 
-		n = sys_scratch[i];
+		n = scratch[i];
 		renderer_draw_font8x8(x + (i * 8), y, c, font8x8_basic[n]);
 	}
 }

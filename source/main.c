@@ -44,15 +44,44 @@
  */
 
 /*
- * utilities
+ * headers
  */
 
-extern char sys_scratch[256];
+/* harvest engine */
+#include "harvest.h"
 
-void sys_error(const char *s);
-void sys_warning(const char *s);
-void sys_message(const char *s);
-void sys_log(const char *s);
-void *sys_memset8(void *d, uint8_t c, size_t n);
-void *sys_memset16(void *d, uint16_t c, size_t n);
-void *sys_memset32(void *d, uint32_t c, size_t n);
+/*
+ * main
+ */
+
+int main(int argc, char **argv)
+{
+	/* init */
+	if (!platform_init(640, 480, "harvest engine"))
+		platform_error("failed to init platform");
+
+	/* main loop */
+	while (platform_running())
+	{
+		/* poll events */
+		platform_frame_start();
+
+		/* quit on esc */
+		if (platform_key(KEY_ESCAPE)) break;
+
+		/* clear screen */
+		platform_screen_clear(RGB(100, 200, 255));
+
+		/* draw some text */
+		renderer_draw_text(2, 2, RGB(255, 255, 255), "harvest game engine\npress escape to quit");
+
+		/* show frame on screen*/
+		platform_frame_end();
+	}
+
+	/* quit */
+	platform_quit();
+
+	/* exit gracefully */
+	return 0;
+}

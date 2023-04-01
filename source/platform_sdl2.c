@@ -283,7 +283,7 @@ void platform_frame_end()
 
 void platform_screen_clear(uint32_t c)
 {
-	sys_memset32(context.pixels, c, context.width * context.height);
+	memset32(context.pixels, c, context.width * context.height);
 }
 
 /*

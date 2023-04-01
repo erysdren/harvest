@@ -44,85 +44,11 @@
  */
 
 /*
- * headers
+ * utilities
  */
 
-/* harvest engine */
-#include "harvest.h"
+extern char scratch[256];
 
-/*
- * globals
- */
-
-/* scratch buffer */
-char sys_scratch[256];
-
-/*
- * sys_error
- */
-
-void sys_error(const char *s)
-{
-	printf("error: %s\n", s);
-	exit(1);
-}
-
-/*
- * sys_warning
- */
-
-void sys_warning(const char *s)
-{
-	printf("warning: %s\n", s);
-}
-
-/*
- * sys_message
- */
-
-void sys_message(const char *s)
-{
-	printf("message: %s\n", s);
-}
-
-/*
- * sys_log
- */
-
-void sys_log(const char *s)
-{
-	printf("message: %s\n", s);
-}
-
-/*
- * sys_memset8
- */
-
-void *sys_memset8(void *d, uint8_t c, size_t n)
-{
-	uint8_t *p = (uint8_t *)d;
-	while (n--) p[n] = c;
-	return d;
-}
-
-/*
- * sys_memset16
- */
-
-void *sys_memset16(void *d, uint16_t c, size_t n)
-{
-	uint16_t *p = (uint16_t *)d;
-	while (n--) p[n] = c;
-	return d;
-}
-
-/*
- * sys_memset32
- */
-
-void *sys_memset32(void *d, uint32_t c, size_t n)
-{
-	uint32_t *p = (uint32_t *)d;
-	while (n--) p[n] = c;
-	return d;
-}
+void *memset8(void *d, uint8_t c, size_t n);
+void *memset16(void *d, uint16_t c, size_t n);
+void *memset32(void *d, uint32_t c, size_t n);
