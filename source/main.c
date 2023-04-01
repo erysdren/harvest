@@ -63,17 +63,32 @@ int main(int argc, char **argv)
 	/* main loop */
 	while (platform_running())
 	{
+		/*
+		 * input
+		 */
+
 		/* poll events */
 		platform_frame_start();
 
 		/* quit on esc */
 		if (platform_key(KEY_ESCAPE)) break;
 
+		/*
+		 * rendering
+		 */
+
 		/* clear screen */
 		platform_screen_clear(RGB(100, 200, 255));
 
+		/* clear z-buffer */
+		renderer_frame_start();
+
 		/* draw some text */
 		renderer_draw_text(2, 2, RGB(255, 255, 255), "harvest game engine\npress escape to quit");
+
+		/*
+		 * end frame
+		 */
 
 		/* show frame on screen*/
 		platform_frame_end();

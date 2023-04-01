@@ -101,9 +101,6 @@ int platform_init(int w, int h, const char *title)
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 		return SDL_FALSE;
 
-	/* turn on relative mouse */
-	SDL_SetRelativeMouseMode(SDL_TRUE);
-
 	/* create window */
 	context.window = SDL_CreateWindow(
 		title,
@@ -162,7 +159,6 @@ void platform_quit()
 	if (context.pixels != NULL) free(context.pixels);
 
 	/* sdl2 */
-	SDL_SetRelativeMouseMode(SDL_FALSE);
 	SDL_Quit();
 }
 

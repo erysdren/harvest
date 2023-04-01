@@ -43,8 +43,5 @@
  *
  */
 
-/*
- * renderer
- */
-
+void renderer_frame_start();
 void renderer_draw_text(int x, int y, uint32_t c, const char *fmt, ...);
