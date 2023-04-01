@@ -56,8 +56,8 @@
 #include "font8x8_basic.h"
 
 /* drummyfish */
-#define S3L_RESOLUTION_X 640
-#define S3L_RESOLUTION_Y 480
+#define S3L_RESOLUTION_X SCR_W
+#define S3L_RESOLUTION_Y SCR_H
 #define S3L_PIXEL_FUNCTION S3L_Pixel
 #define S3L_Z_BUFFER 1
 #define S3L_NEAR_CROSS_STRATEGY 3

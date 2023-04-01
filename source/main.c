@@ -57,14 +57,14 @@
 int main(int argc, char **argv)
 {
 	/* init */
-	if (!platform_init(640, 480, "harvest engine"))
+	if (!platform_init(SCR_W, SCR_H, SCR_TITLE))
 		platform_error("failed to init platform");
 
 	/* main loop */
 	while (platform_running())
 	{
 		/*
-		 * input
+		 * start frame
 		 */
 
 		/* poll events */
