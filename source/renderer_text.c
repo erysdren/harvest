@@ -57,7 +57,7 @@
  * renderer_draw_font8x8
  */
 
-void renderer_draw_font8x8(int x, int y, u32 c, u8 *bitmap)
+void renderer_draw_font8x8(int x, int y, uint32_t c, uint8_t *bitmap)
 {
 	/* variables */
 	int xx, yy;
@@ -79,7 +79,7 @@ void renderer_draw_font8x8(int x, int y, u32 c, u8 *bitmap)
  * renderer_draw_text
  */
 
-void renderer_draw_text(int x, int y, u32 c, const char *fmt, ...)
+void renderer_draw_text(int x, int y, uint32_t c, const char *fmt, ...)
 {
 	/* variables */
 	int i, p, n;

@@ -51,19 +51,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <stdint.h>
 #include <string.h>
-
-/*
- * types
- */
-
-typedef char s8;
-typedef short s16;
-typedef int s32;
-
-typedef unsigned char u8;
-typedef unsigned short u16;
-typedef unsigned int u32;
 
 /*
  * macros
@@ -86,6 +75,3 @@ typedef unsigned int u32;
 #include "platform.h"
 #include "sys.h"
 #include "renderer.h"
-#include "s3l_types.h"
-#include "s3l.h"
-#include "s3l_inline.h"

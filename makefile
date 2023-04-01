@@ -49,7 +49,6 @@ SOURCES = \
 	source/sys_utils.c \
 	source/sys_main.c \
 	source/renderer_text.c \
-	source/s3l.c \
 
 OUTPUT = -o harvest
 

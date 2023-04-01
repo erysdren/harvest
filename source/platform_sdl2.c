@@ -72,8 +72,8 @@ struct
 	SDL_Window *window;
 	SDL_Texture *texture;
 	SDL_Renderer *renderer;
-	u8 running;
-	u32 *pixels;
+	uint8_t running;
+	uint32_t *pixels;
 	int width;
 	int height;
 
@@ -87,7 +87,7 @@ struct
 	} mouse;
 
 	/* keys */
-	u8 keys[256];
+	uint8_t keys[256];
 
 } context;
 
@@ -137,7 +137,7 @@ int platform_init(int w, int h, const char *title)
 	if (context.texture == NULL) return SDL_FALSE;
 
 	/* allocate pixels */
-	context.pixels = (u32 *)malloc(w * h * sizeof(u32));
+	context.pixels = (uint32_t *)malloc(w * h * sizeof(uint32_t));
 	if (context.pixels == NULL) return SDL_FALSE;
 
 	/* set values */
@@ -271,7 +271,7 @@ void platform_frame_end()
 	calc_screen_size(x, y, &rect);
 
 	SDL_UpdateTexture(context.texture, NULL, context.pixels, 
-		context.width * sizeof(u32));
+		context.width * sizeof(uint32_t));
 	SDL_RenderClear(context.renderer);
 	SDL_RenderCopy(context.renderer, context.texture, NULL, &rect);
 	SDL_RenderPresent(context.renderer);
@@ -281,7 +281,7 @@ void platform_frame_end()
  * platform_screen_clear
  */
 
-void platform_screen_clear(u32 c)
+void platform_screen_clear(uint32_t c)
 {
 	sys_memset32(context.pixels, c, context.width * context.height);
 }
@@ -299,7 +299,7 @@ int platform_key(int sc)
  * platform_draw_pixel
  */
 
-void platform_draw_pixel(u16 x, u16 y, u32 c)
+void platform_draw_pixel(uint16_t x, uint16_t y, uint32_t c)
 {
 	context.pixels[(y * context.width) + x] = c;
 }
@@ -319,4 +319,15 @@ void platform_mouse(int *x, int *y, int *dx, int *dy)
 	/* reset delta after each read? */
 	context.mouse.dx = 0;
 	context.mouse.dy = 0;
+}
+
+/*
+ * platform_error
+ */
+
+void platform_error(const char *s)
+{
+	fprintf(stderr, "Error: %s\n", s);
+	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", s, NULL);
+	exit(1);
 }

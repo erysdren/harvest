@@ -98,9 +98,9 @@ void sys_log(const char *s)
  * sys_memset8
  */
 
-void *sys_memset8(void *d, u8 c, size_t n)
+void *sys_memset8(void *d, uint8_t c, size_t n)
 {
-	u8 *p = (u8 *)d;
+	uint8_t *p = (uint8_t *)d;
 	while (n--) p[n] = c;
 	return d;
 }
@@ -109,9 +109,9 @@ void *sys_memset8(void *d, u8 c, size_t n)
  * sys_memset16
  */
 
-void *sys_memset16(void *d, u16 c, size_t n)
+void *sys_memset16(void *d, uint16_t c, size_t n)
 {
-	u16 *p = (u16 *)d;
+	uint16_t *p = (uint16_t *)d;
 	while (n--) p[n] = c;
 	return d;
 }
@@ -120,9 +120,9 @@ void *sys_memset16(void *d, u16 c, size_t n)
  * sys_memset32
  */
 
-void *sys_memset32(void *d, u32 c, size_t n)
+void *sys_memset32(void *d, uint32_t c, size_t n)
 {
-	u32 *p = (u32 *)d;
+	uint32_t *p = (uint32_t *)d;
 	while (n--) p[n] = c;
 	return d;
 }
