@@ -44,7 +44,9 @@
  */
 
 /*
+ *
  * headers
+ *
  */
 
 /* harvest engine */
@@ -52,6 +54,40 @@
 
 /* font8x8 */
 #include "font8x8_basic.h"
+
+/* drummyfish */
+#define S3L_RESOLUTION_X 640
+#define S3L_RESOLUTION_Y 480
+#define S3L_PIXEL_FUNCTION S3L_Pixel
+#define S3L_SORT 1
+#define S3L_NEAR_CROSS_STRATEGY 1
+#include "small3dlib.h"
+
+/*
+ *
+ * globals
+ *
+ */
+
+S3L_Scene scene;
+
+/*
+ *
+ * functions
+ *
+ */
+
+/*
+ * S3L_Pixel
+ */
+
+static inline void S3L_Pixel(S3L_PixelInfo *pixel)
+{
+	platform_draw_pixel(pixel->x, pixel->y, RGB(
+		(pixel->modelIndex + 1) * 16 + (pixel->triangleIndex + 1) * 16,
+		(pixel->modelIndex + 1) * 16 + (pixel->triangleIndex + 1) * 16,
+		(pixel->modelIndex + 1) * 16 + (pixel->triangleIndex + 1) * 16));
+}
 
 /*
  * renderer_draw_font8x8
