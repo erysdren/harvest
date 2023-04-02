@@ -84,7 +84,6 @@ S3L_Scene scene;
 static inline void S3L_Pixel(S3L_PixelInfo *pixel)
 {
 	platform_draw_pixel(pixel->x, pixel->y, RGB(255, 255, 255));
-	
 }
 
 /*
