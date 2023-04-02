@@ -60,6 +60,9 @@ int main(int argc, char **argv)
 	if (!platform_init(SCR_W, SCR_H, SCR_TITLE))
 		platform_error("failed to init platform");
 
+	/* init renderer */
+	renderer_init();
+
 	/* main loop */
 	while (platform_running())
 	{
@@ -78,13 +81,13 @@ int main(int argc, char **argv)
 		 */
 
 		/* clear screen */
-		platform_screen_clear(RGB(100, 200, 255));
+		platform_screen_clear(RGB(0, 0, 0));
 
 		/* clear z-buffer */
 		renderer_frame_start();
 
-		/* draw some text */
-		renderer_draw_text(2, 2, RGB(255, 255, 255), "harvest game engine\npress escape to quit");
+		/* draw square */
+		renderer_draw_square(0, 0, 1, 1);
 
 		/*
 		 * end frame

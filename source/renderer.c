@@ -83,10 +83,31 @@ S3L_Scene scene;
 
 static inline void S3L_Pixel(S3L_PixelInfo *pixel)
 {
-	platform_draw_pixel(pixel->x, pixel->y, RGB(
-		(pixel->modelIndex + 1) * 16 + (pixel->triangleIndex + 1) * 16,
-		(pixel->modelIndex + 1) * 16 + (pixel->triangleIndex + 1) * 16,
-		(pixel->modelIndex + 1) * 16 + (pixel->triangleIndex + 1) * 16));
+	platform_draw_pixel(pixel->x, pixel->y, RGB(255, 255, 255));
+	
+}
+
+/*
+ * renderer_init
+ */
+
+void renderer_init()
+{
+	/* variables */
+	S3L_Vec4 origin;
+
+	/* init origin */
+	S3L_vec4Init(&origin);
+
+	/* init scene */
+	S3L_sceneInit(NULL, 0, &scene);
+
+	/* init camera */
+	scene.camera.focalLength = 0;
+	S3L_lookAt(origin, &scene.camera.transform);
+	scene.camera.transform.translation.z = -16 * S3L_F;
+	scene.camera.transform.scale.x = S3L_F / 8;
+	scene.camera.transform.scale.y = S3L_F / 8;
 }
 
 /*
@@ -95,8 +116,72 @@ static inline void S3L_Pixel(S3L_PixelInfo *pixel)
 
 void renderer_frame_start()
 {
+	/* variables */
+	int dx, dy;
+
 	/* clear zbuffer */
 	S3L_newFrame();
+
+	/* update camera */
+	platform_mouse(NULL, NULL, &dx, &dy);
+
+	scene.camera.transform.translation.x += dx * SENSITIVITY;
+	scene.camera.transform.translation.y -= dy * SENSITIVITY;
+}
+
+/*
+ * renderer_draw_square
+ */
+
+void renderer_draw_square(int x, int y, int w, int h)
+{
+	/* variables */
+	S3L_Model3D model;
+	S3L_Index triangles[6];
+	S3L_Unit vertices[12];
+
+	/* fixed */
+	x *= S3L_F;
+	y *= S3L_F;
+	w *= S3L_F;
+	h *= S3L_F;
+
+	/* init vertices */
+	vertices[0] = x - (w / 2);
+	vertices[1] = y + (h / 2);
+	vertices[2] = 0;
+
+	vertices[3] = x + (w / 2);
+	vertices[4] = y + (h / 2);
+	vertices[5] = 0;
+
+	vertices[6] = x + (w / 2);
+	vertices[7] = y - (h / 2);
+	vertices[8] = 0;
+
+	vertices[9] = x - (w / 2);
+	vertices[10] = y - (h / 2);
+	vertices[11] = 0;
+
+	/* init triangles */
+	triangles[0] = 0;
+	triangles[1] = 1;
+	triangles[2] = 2;
+
+	triangles[3] = 0;
+	triangles[4] = 3;
+	triangles[5] = 2;
+
+	/* init model */
+	S3L_model3DInit(vertices, 4, triangles, 2, &model);
+	model.config.backfaceCulling = 0;
+
+	/* set model */
+	scene.models = &model;
+	scene.modelCount = 1;
+
+	/* draw */
+	S3L_drawScene(scene);
 }
 
 /*

@@ -63,6 +63,8 @@
 #define SCR_TITLE "harvest engine"
 #define SCR_BPP 32
 
+#define SENSITIVITY 32
+
 #define ARGB(r, g, b, a) (((a) << 24) | ((r) << 16) | ((g) << 8) | (b))
 #define RGBA(r, g, b, a) (((r) << 24) | ((g) << 16) | ((b) << 8) | (a))
 

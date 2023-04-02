@@ -141,6 +141,7 @@ int platform_init(int w, int h, const char *title)
 	context.width = w;
 	context.height = h;
 	context.running = SDL_TRUE;
+	SDL_SetRelativeMouseMode(SDL_TRUE);
 
 	/* return success */
 	return SDL_TRUE;
@@ -159,6 +160,7 @@ void platform_quit()
 	if (context.pixels != NULL) free(context.pixels);
 
 	/* sdl2 */
+	SDL_SetRelativeMouseMode(SDL_FALSE);
 	SDL_Quit();
 }
 
