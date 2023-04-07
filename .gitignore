@@ -4,3 +4,5 @@ harvest
 
 .vscode/
 *.code-workspace
+
+local/
